@@ -1,13 +1,10 @@
-namespace GuildManagerServer.Api.Models;
+namespace GuildManagerServer.Api.Dto;
 
-public class Character
+public record class DtoPostCharacter
 {
-    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public int RaceId  { get; set; }
-    public Race? Race { get; set; }
     public int JobId { get; set; }
-    public Job? Job { get; set; }
     public int Level { get; set; }
 
     //Stats
@@ -22,5 +19,4 @@ public class Character
     public int HairId { get; set; }
     public int HairColorId { get; set; }
     public int EquipmentId  { get; set; }
-    public Equipment? Equipment { get; set; }
 }

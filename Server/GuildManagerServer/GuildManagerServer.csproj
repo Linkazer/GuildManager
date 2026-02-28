@@ -13,10 +13,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Api\Controller\" />
     <Folder Include="Api\Data\" />
     <Folder Include="Api\Data\Migrations\" />
-    <Folder Include="Api\Models\" />
+    <Folder Include="Api\Dto\" />
+    <Folder Include="Api\Mapping\" />
+    <Folder Include="Api\Repositories\" />
+    <Folder Include="Api\Services\" />
     <Folder Include="Databases\" />
+    <Folder Include="Domain\" />
   </ItemGroup>
 
 </Project>

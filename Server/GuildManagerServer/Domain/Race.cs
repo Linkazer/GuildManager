@@ -1,11 +1,11 @@
-namespace GuildManagerServer.Api.Models;
+namespace GuildManagerServer.Domain;
 
-public class Job
+public class Race
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     
-    // Bonus Stats
+    // Start Stats
     public int Strength { get; set; }
     public int Spirit { get; set; }
     public int Presence { get; set; }
@@ -13,5 +13,5 @@ public class Job
     public int Instinct { get; set; }
 
     // Health
-    public int HealthByLevel { get; set; }
+    public int Health { get; set; }
 }

@@ -1,4 +1,4 @@
-namespace GuildManagerServer.Api.Models;
+namespace GuildManagerServer.Domain;
 
 public class Equipment
 {

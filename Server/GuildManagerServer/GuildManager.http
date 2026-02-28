@@ -1,0 +1,47 @@
+GET http://localhost:5181/api/Character
+
+###
+GET http://localhost:5181/api/Character/4
+
+###
+POST http://localhost:5181/api/Character
+Content-Type: application/json
+
+{
+  "Name": "MonPersonnage",
+  "RaceId": 1,
+  "JobId": 1,
+  "Level": 10,
+  "Strength": 15,
+  "Spirit": 12,
+  "Presence": 8,
+  "Dexterity": 14,
+  "Instinct": 11,
+  "BodyId": 3,
+  "HairId": 2,
+  "HairColorId": 5,
+  "EquipmentId": 1
+}
+
+###
+PUT http://localhost:5181/api/Character/4
+Content-Type: application/json
+
+{
+  "Name": "Updated Character",
+  "RaceId": 1,
+  "JobId": 1,
+  "Level": 2,
+  "Strength": 1,
+  "Spirit": 2,
+  "Presence": 8,
+  "Dexterity": 4,
+  "Instinct": 1,
+  "BodyId": 3,
+  "HairId": 2,
+  "HairColorId": 5,
+  "EquipmentId": 1
+}
+
+###
+DELETE http://localhost:5181/api/Character/1

@@ -2,6 +2,7 @@
 using GuildManagerServer.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GuildManagerServer.Api.Data.Migrations
 {
     [DbContext(typeof(GuildContext))]
-    partial class GuildContextModelSnapshot : ModelSnapshot
+    [Migration("20260228125506_ChangeModelNames")]
+    partial class ChangeModelNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
@@ -86,13 +89,6 @@ namespace GuildManagerServer.Api.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Equipment");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Basic clothes"
-                        });
                 });
 
             modelBuilder.Entity("GuildManagerServer.Api.Models.JobModel", b =>
@@ -126,19 +122,6 @@ namespace GuildManagerServer.Api.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Job");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Dexterity = 0,
-                            HealthByLevel = 3,
-                            Instinct = 0,
-                            Name = "Fighter",
-                            Presence = 0,
-                            Spirit = 0,
-                            Strength = 0
-                        });
                 });
 
             modelBuilder.Entity("GuildManagerServer.Api.Models.RaceModel", b =>
@@ -172,19 +155,6 @@ namespace GuildManagerServer.Api.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Race");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Dexterity = 0,
-                            Health = 10,
-                            Instinct = 0,
-                            Name = "Human",
-                            Presence = 0,
-                            Spirit = 0,
-                            Strength = 0
-                        });
                 });
 
             modelBuilder.Entity("GuildManagerServer.Api.Models.CharacterModel", b =>
