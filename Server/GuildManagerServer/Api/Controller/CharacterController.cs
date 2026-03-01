@@ -1,7 +1,9 @@
 using GuildManagerServer.Api.Dto;
 using GuildManagerServer.Api.Mapping;
+using GuildManagerServer.Api.Results;
 using GuildManagerServer.Api.Services;
 using GuildManagerServer.Domain;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GuildManagerServer.Api.Controller;
@@ -20,57 +22,55 @@ public class CharacterController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        List<Character> characters = await service.GetAllAsync();
+        Result<List<Character>> result = await service.GetAllAsync();
 
-        List<DtoGetCharacter> characterDtos = characters.Select(c => c.ToDtoGetCharacter()).ToList();
+        Result<List<DtoGetCharacter>> mappedResult = result.Map(list => list.Select(c => c.ToDtoGetCharacter()).ToList());
 
-        return Ok(characterDtos);
+        return this.GetResult(mappedResult);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
-        Character? character = await service.GetByIdAsync(id);
+        Result<Character> result = await service.GetByIdAsync(id);
 
-        if(character == null)
-        {
-            return NotFound();
-        }
+        Result<DtoGetCharacter> dtoResult = result.Map(c => c.ToDtoGetCharacter());
 
-        return Ok(character.ToDtoGetCharacter());
+        return this.GetResult(dtoResult);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateCharacter([FromBody] DtoPostCharacter characterToCreate)
     {
-        Character? createdCharacter = await service.CreateCharacterAsync(characterToCreate);
+        Result<Character> result = await service.CreateCharacterAsync(characterToCreate);
 
-        if(createdCharacter == null)
+        if(result.ResultCode == ResultCode.DataCreated && result.Data != null)
         {
-            return Conflict();
+            return CreatedAtAction(nameof(GetById), new { id = result.Data.Id }, result.Data.ToDtoGetCharacter());
         }
 
-        return Ok(createdCharacter.ToDtoGetCharacter());
+        Result<DtoGetCharacter> dtoResult = result.Map(c => c.ToDtoGetCharacter());
+
+        return this.GetResult(dtoResult);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateCharacter([FromRoute] int id, [FromBody] DtoPutCharacter updateDto)
     {
-        Character? updatedCharacter = await service.UpdateCharacterAsync(id, updateDto);
+        Result<Character> result = await service.UpdateCharacterAsync(id, updateDto);
 
-        if(updatedCharacter == null)
-        {
-            return NotFound(id);
-        }
+        Result<DtoGetCharacter> dtoResult = result.Map(c => c.ToDtoGetCharacter());
 
-        return Ok(updatedCharacter.ToDtoGetCharacter()); // CODE REVIEW : Voir si c'est nécessaire, ou si on renvoit juste NoContent
+        return this.GetResult(dtoResult);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteById([FromRoute] int id)
     {
-        await service.DeleteCharacterAsync(id);
+        Result<Character> result = await service.DeleteCharacterAsync(id);
 
-        return NoContent();
+        Result<DtoGetCharacter> dtoResult = result.Map(c => c.ToDtoGetCharacter());
+
+        return this.GetResult(dtoResult);
     }
 }

@@ -3,8 +3,8 @@ using GuildManagerServer.Api.Dto;
 using GuildManagerServer.Api.Mapping;
 using GuildManagerServer.Api.Models;
 using GuildManagerServer.Api.Repositories;
+using GuildManagerServer.Api.Results;
 using GuildManagerServer.Domain;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace GuildManagerServer.Api.Services;
 
@@ -23,43 +23,43 @@ public class CharacterService : ICharacterService
         equipmentRepository = nEquipmentRepository;
     }
 
-    public async Task<List<Character>> GetAllAsync()
+    public async Task<Result<List<Character>>> GetAllAsync()
     {
         List<CharacterModel> models = await repository.GetAllModelsAsync();
 
-        return models.Select(c => c.ToCharacter()).ToList();
+        return Result<List<Character>>.Success(ResultCode.DataFound, models.Select(c => c.ToCharacter()).ToList());
     }
 
-    public async Task<Character?> GetByIdAsync(int id)
+    public async Task<Result<Character>> GetByIdAsync(int id)
     {
         CharacterModel? model = await repository.GetModelByIdAsync(id);
 
         if(model == null)
         {
-            return null;
+            return Result<Character>.Failure(ResultCode.CharacterNotfound);
         }
 
-        return model.ToCharacter();
+        return Result<Character>.Success(ResultCode.DataFound, model.ToCharacter());
     }
 
-    public async Task<Character?> CreateCharacterAsync(DtoPostCharacter characterToCreate)
+    public async Task<Result<Character>> CreateCharacterAsync(DtoPostCharacter characterToCreate)
     {
         RaceModel? raceModel = await raceRepository.GetByIdAsync(characterToCreate.RaceId);
         if(raceModel == null)
         {
-            return null;
+            return Result<Character>.Failure(ResultCode.RaceNotFound);
         }
 
         JobModel? jobModel = await jobRepository.GetByIdAsync(characterToCreate.JobId);
         if(jobModel == null)
         {
-            return null;
+            return Result<Character>.Failure(ResultCode.JobNotFound);
         }
 
         EquipmentModel? equipmentModel = await equipmentRepository.GetByIdAsync(characterToCreate.EquipmentId);
         if(equipmentModel == null)
         {
-            return null;
+            return Result<Character>.Failure(ResultCode.EquipmentNotFound);
         }
 
         Character newCharacter = characterToCreate.ToCharacter(raceModel.ToRace(), jobModel.ToJob(), equipmentModel.ToEquipment());
@@ -69,16 +69,16 @@ public class CharacterService : ICharacterService
 
         newCharacter.Id = model.Id;
 
-        return newCharacter;
+        return Result<Character>.Success(ResultCode.DataCreated, newCharacter);
     }
 
-    public async Task<Character?> UpdateCharacterAsync(int id, DtoPutCharacter updatedCharacter)
+    public async Task<Result<Character>> UpdateCharacterAsync(int id, DtoPutCharacter updatedCharacter)
     {
         CharacterModel? modelToUpdate = await repository.GetModelByIdAsync(id);
 
         if(modelToUpdate == null)
         {
-            return null;
+            return Result<Character>.Failure(ResultCode.CharacterNotfound);
         }
 
         Character character = modelToUpdate.ToCharacter();
@@ -100,7 +100,7 @@ public class CharacterService : ICharacterService
             RaceModel? raceModel = await raceRepository.GetByIdAsync(updatedCharacter.RaceId);
             if(raceModel == null)
             {
-                return null;
+                return Result<Character>.Failure(ResultCode.RaceNotFound);;
             }
 
             character.Race = raceModel.ToRace();
@@ -111,7 +111,7 @@ public class CharacterService : ICharacterService
             JobModel? jobModel = await jobRepository.GetByIdAsync(updatedCharacter.JobId);
             if(jobModel == null)
             {
-                return null;
+                return Result<Character>.Failure(ResultCode.JobNotFound);;
             }
 
             character.Job = jobModel.ToJob();
@@ -122,7 +122,7 @@ public class CharacterService : ICharacterService
             EquipmentModel? equipmentModel = await equipmentRepository.GetByIdAsync(updatedCharacter.EquipmentId);
             if(equipmentModel == null)
             {
-                return null;
+                return Result<Character>.Failure(ResultCode.EquipmentNotFound);;
             }
 
             character.Equipment = equipmentModel.ToEquipment();
@@ -146,11 +146,19 @@ public class CharacterService : ICharacterService
 
         await repository.UpdateModel(modelToUpdate);
 
-        return character;
+        return Result<Character>.Success(ResultCode.SimpleValidate);
     }
 
-    public async Task DeleteCharacterAsync(int id)
+    public async Task<Result<Character>> DeleteCharacterAsync(int id)
     {
+        Result<Character> foundCharacterResult = await GetByIdAsync(id);
+
+        if(foundCharacterResult.Data == null)
+        {
+            return foundCharacterResult;
+        }
+
         await repository.DeleteModelAsync(id);
+        return Result<Character>.Success(ResultCode.SimpleValidate);
     }
 }

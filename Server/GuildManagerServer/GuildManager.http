@@ -44,4 +44,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:5181/api/Character/1
+DELETE http://localhost:5181/api/Character/4

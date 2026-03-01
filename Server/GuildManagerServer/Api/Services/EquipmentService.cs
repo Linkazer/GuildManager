@@ -1,4 +1,3 @@
-using System;
 using GuildManagerServer.Api.Mapping;
 using GuildManagerServer.Api.Models;
 using GuildManagerServer.Api.Repositories;
