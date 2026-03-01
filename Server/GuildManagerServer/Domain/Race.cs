@@ -14,4 +14,9 @@ public class Race
 
     // Health
     public int Health { get; set; }
+
+    public int GetTotalStats()
+    {
+        return Strength + Spirit + Presence + Dexterity + Instinct;
+    }
 }

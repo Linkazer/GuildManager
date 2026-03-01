@@ -8,34 +8,34 @@ POST http://localhost:5181/api/Character
 Content-Type: application/json
 
 {
-  "Name": "MonPersonnage",
+  "Name": "Torak",
   "RaceId": 1,
   "JobId": 1,
-  "Level": 10,
-  "Strength": 15,
-  "Spirit": 12,
-  "Presence": 8,
-  "Dexterity": 14,
-  "Instinct": 11,
-  "BodyId": 3,
-  "HairId": 2,
-  "HairColorId": 5,
+  "Level": 1,
+  "Strength": 2,
+  "Spirit": 0,
+  "Presence": -1,
+  "Dexterity": 1,
+  "Instinct": 0,
+  "BodyId": 2,
+  "HairId": 1,
+  "HairColorId": 2,
   "EquipmentId": 1
 }
 
 ###
-PUT http://localhost:5181/api/Character/4
+PUT http://localhost:5181/api/Character/5
 Content-Type: application/json
 
 {
-  "Name": "Updated Character",
+  "Name": "Eliette",
   "RaceId": 1,
   "JobId": 1,
-  "Level": 2,
-  "Strength": 1,
-  "Spirit": 2,
-  "Presence": 8,
-  "Dexterity": 4,
+  "Level": 1,
+  "Strength": 0,
+  "Spirit": -1,
+  "Presence": 2,
+  "Dexterity": 0,
   "Instinct": 1,
   "BodyId": 3,
   "HairId": 2,

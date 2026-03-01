@@ -14,4 +14,9 @@ public class Job
 
     // Health
     public int HealthByLevel { get; set; }
+
+    public int GetTotalStats()
+    {
+        return Strength + Spirit + Presence + Dexterity + Instinct;
+    }
 }

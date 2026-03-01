@@ -11,6 +11,7 @@ public enum ResultCode
     #region Invalid Result
     // Character
     CharacterNotfound,
+    InvalidCharacterData,
 
     // Race
     RaceNotFound,

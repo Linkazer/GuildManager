@@ -1,4 +1,3 @@
-using System;
 using GuildManagerServer.Api.Dto;
 using GuildManagerServer.Api.Mapping;
 using GuildManagerServer.Api.Models;
@@ -62,14 +61,21 @@ public class CharacterService : ICharacterService
             return Result<Character>.Failure(ResultCode.EquipmentNotFound);
         }
 
-        Character newCharacter = characterToCreate.ToCharacter(raceModel.ToRace(), jobModel.ToJob(), equipmentModel.ToEquipment());
+        try
+        {
+            Character newCharacter = characterToCreate.ToCharacter(raceModel.ToRace(), jobModel.ToJob(), equipmentModel.ToEquipment());
 
-        CharacterModel model = newCharacter.ToModel(raceModel, jobModel, equipmentModel);
-        await repository.AddModel(model);
+            CharacterModel model = newCharacter.ToModel(raceModel, jobModel, equipmentModel);
+            await repository.AddModel(model);
 
-        newCharacter.Id = model.Id;
+            newCharacter.SetId(model.Id);
 
-        return Result<Character>.Success(ResultCode.DataCreated, newCharacter);
+            return Result<Character>.Success(ResultCode.DataCreated, newCharacter);
+        }
+        catch (ArgumentException ex)
+        {
+            return Result<Character>.Failure(ResultCode.InvalidCharacterData, ex.Message);
+        }
     }
 
     public async Task<Result<Character>> UpdateCharacterAsync(int id, DtoPutCharacter updatedCharacter)
@@ -81,72 +87,81 @@ public class CharacterService : ICharacterService
             return Result<Character>.Failure(ResultCode.CharacterNotfound);
         }
 
-        Character character = modelToUpdate.ToCharacter();
-
-        //Updates Character. CODE REVIEW : Mettre les setters en private
-        character.Name = updatedCharacter.Name;
-        character.Level = updatedCharacter.Level;
-        character.Strength = updatedCharacter.Strength;
-        character.Spirit = updatedCharacter.Spirit;
-        character.Presence = updatedCharacter.Presence;
-        character.Dexterity = updatedCharacter.Dexterity;
-        character.Instinct = updatedCharacter.Instinct;
-        character.BodyId = updatedCharacter.BodyId;
-        character.HairId = updatedCharacter.HairId;
-        character.HairColorId = updatedCharacter.HairColorId;
-
-        if(character.Race.Id != updatedCharacter.RaceId)
+        try
         {
-            RaceModel? raceModel = await raceRepository.GetByIdAsync(updatedCharacter.RaceId);
-            if(raceModel == null)
+            Character character = modelToUpdate.ToCharacter();
+
+            //Updates Character. CODE REVIEW : Mettre les setters en private
+            character.SetName(updatedCharacter.Name);
+
+            character.SetStats(updatedCharacter.Level,
+                updatedCharacter.Strength,
+                updatedCharacter.Spirit,
+                updatedCharacter.Presence,
+                updatedCharacter.Dexterity,
+                updatedCharacter.Instinct);
+
+            character.SetPersonalisation(updatedCharacter.BodyId,
+                updatedCharacter.HairId,
+                updatedCharacter.HairColorId);
+
+            if(character.Race.Id != updatedCharacter.RaceId)
             {
-                return Result<Character>.Failure(ResultCode.RaceNotFound);;
+                RaceModel? raceModel = await raceRepository.GetByIdAsync(updatedCharacter.RaceId);
+                if(raceModel == null)
+                {
+                    return Result<Character>.Failure(ResultCode.RaceNotFound);;
+                }
+
+                character.SetRace(raceModel.ToRace());
             }
 
-            character.Race = raceModel.ToRace();
-        }
-
-        if(character.Job.Id != updatedCharacter.JobId)
-        {
-            JobModel? jobModel = await jobRepository.GetByIdAsync(updatedCharacter.JobId);
-            if(jobModel == null)
+            if(character.Job.Id != updatedCharacter.JobId)
             {
-                return Result<Character>.Failure(ResultCode.JobNotFound);;
+                JobModel? jobModel = await jobRepository.GetByIdAsync(updatedCharacter.JobId);
+                if(jobModel == null)
+                {
+                    return Result<Character>.Failure(ResultCode.JobNotFound);;
+                }
+
+                character.SetJob(jobModel.ToJob());
             }
 
-            character.Job = jobModel.ToJob();
-        }
-
-        if(character.Equipment.Id != updatedCharacter.EquipmentId)
-        {
-            EquipmentModel? equipmentModel = await equipmentRepository.GetByIdAsync(updatedCharacter.EquipmentId);
-            if(equipmentModel == null)
+            if(character.Equipment.Id != updatedCharacter.EquipmentId)
             {
-                return Result<Character>.Failure(ResultCode.EquipmentNotFound);;
+                EquipmentModel? equipmentModel = await equipmentRepository.GetByIdAsync(updatedCharacter.EquipmentId);
+                if(equipmentModel == null)
+                {
+                    return Result<Character>.Failure(ResultCode.EquipmentNotFound);;
+                }
+
+                character.SetEquipment(equipmentModel.ToEquipment());
             }
 
-            character.Equipment = equipmentModel.ToEquipment();
+            //Update Model. CODE REVIEW : Peut être mit à part (Mapper)
+            modelToUpdate.Name = character.Name;
+            modelToUpdate.Level = character.Level;
+            modelToUpdate.Strength = character.Strength;
+            modelToUpdate.Spirit = character.Spirit;
+            modelToUpdate.Presence = character.Presence;
+            modelToUpdate.Dexterity = character.Dexterity;
+            modelToUpdate.Instinct = character.Instinct;
+            modelToUpdate.BodyId = character.BodyId;
+            modelToUpdate.HairId = character.HairId;
+            modelToUpdate.HairColorId = character.HairColorId;
+
+            modelToUpdate.RaceId = character.Race.Id;
+            modelToUpdate.JobId = character.Job.Id;
+            modelToUpdate.EquipmentId = character.Equipment.Id;
+
+            await repository.UpdateModel(modelToUpdate);
+
+            return Result<Character>.Success(ResultCode.SimpleValidate);
         }
-
-        //Update Model. CODE REVIEW : Peut être mit à part (Mapper)
-        modelToUpdate.Name = character.Name;
-        modelToUpdate.Level = character.Level;
-        modelToUpdate.Strength = character.Strength;
-        modelToUpdate.Spirit = character.Spirit;
-        modelToUpdate.Presence = character.Presence;
-        modelToUpdate.Dexterity = character.Dexterity;
-        modelToUpdate.Instinct = character.Instinct;
-        modelToUpdate.BodyId = character.BodyId;
-        modelToUpdate.HairId = character.HairId;
-        modelToUpdate.HairColorId = character.HairColorId;
-
-        modelToUpdate.RaceId = character.Race.Id;
-        modelToUpdate.JobId = character.Job.Id;
-        modelToUpdate.EquipmentId = character.Equipment.Id;
-
-        await repository.UpdateModel(modelToUpdate);
-
-        return Result<Character>.Success(ResultCode.SimpleValidate);
+        catch (ArgumentException ex)
+        {
+            return Result<Character>.Failure(ResultCode.InvalidCharacterData, ex.Message);
+        }
     }
 
     public async Task<Result<Character>> DeleteCharacterAsync(int id)

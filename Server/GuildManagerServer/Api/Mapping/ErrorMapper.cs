@@ -17,6 +17,12 @@ public static class ErrorMapper
                 //Must be done in the Controller directly.
             case ResultCode.CharacterNotfound:
                 return controller.NotFound("Character not found.");
+            case ResultCode.InvalidCharacterData:
+                if(result.ErrorMessage == string.Empty)
+                {
+                    return controller.BadRequest("Character data are not valid.");
+                }
+                return controller.BadRequest(result.ErrorMessage);
             case ResultCode.RaceNotFound:
                 return controller.NotFound("Race not found");
             case ResultCode.JobNotFound:

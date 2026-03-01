@@ -24,24 +24,24 @@ public static class CharacterMapping
         }
 
         return new Character
-        {
-            Id = characterModel.Id,
-            Name = characterModel.Name,
-            Race = characterModel.Race.ToRace(),
-            Job = characterModel.Job.ToJob(),
-            Level = characterModel.Level,
+        (
+            characterModel.Id,
+            characterModel.Name,
+            characterModel.Race.ToRace(),
+            characterModel.Job.ToJob(),
+            characterModel.Level,
 
-            Strength = characterModel.Strength,
-            Spirit = characterModel.Spirit,
-            Presence = characterModel.Presence,
-            Dexterity = characterModel.Dexterity,
-            Instinct = characterModel.Instinct,
+            characterModel.Strength,
+            characterModel.Spirit,
+            characterModel.Presence,
+            characterModel.Dexterity,
+            characterModel.Instinct,
 
-            BodyId = characterModel.BodyId,
-            HairId = characterModel.HairId,
-            HairColorId = characterModel.HairColorId,
-            Equipment = characterModel.Equipment.ToEquipment(),
-        };
+            characterModel.BodyId,
+            characterModel.HairId,
+            characterModel.HairColorId,
+            characterModel.Equipment.ToEquipment()
+        );
     }
 
     public static CharacterModel ToModel(this Character character, RaceModel race, JobModel job, EquipmentModel equipment)
@@ -100,22 +100,22 @@ public static class CharacterMapping
     public static Character ToCharacter(this DtoPostCharacter postCharacter, Race race, Job job, Equipment equipment)
     {
         return new Character
-        {
-            Name = postCharacter.Name,
-            Race = race,
-            Job = job,
-            Level = postCharacter.Level,
+        (
+            postCharacter.Name,
+            race,
+            job,
+            postCharacter.Level,
 
-            Strength = postCharacter.Strength,
-            Spirit = postCharacter.Spirit,
-            Presence = postCharacter.Presence,
-            Dexterity = postCharacter.Dexterity,
-            Instinct = postCharacter.Instinct,
+            postCharacter.Strength,
+            postCharacter.Spirit,
+            postCharacter.Presence,
+            postCharacter.Dexterity,
+            postCharacter.Instinct,
 
-            BodyId = postCharacter.BodyId,
-            HairId = postCharacter.HairId,
-            HairColorId = postCharacter.HairColorId,
-            Equipment = equipment
-        };
+            postCharacter.BodyId,
+            postCharacter.HairId,
+            postCharacter.HairColorId,
+            equipment
+        );
     }
 }
