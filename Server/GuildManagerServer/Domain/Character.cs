@@ -1,8 +1,8 @@
-using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json.Bson;
-
 namespace GuildManagerServer.Domain;
 
+/// <summary>
+/// Domain class for Characters.
+/// </summary>
 public class Character
 {
     private const int BaseDodge = 3;
@@ -11,6 +11,7 @@ public class Character
     private const int StatsByTwoLevel = 2;
     private const int MaxNameLength = 25;
 
+    //Base
     public int Id { get; private set; }
     public string Name { get; private set; } = string.Empty;
     public Race Race  { get; private set; }
@@ -35,7 +36,8 @@ public class Character
     public int Dodge => BaseDodge + Dexterity;
     public int Will => BaseWill + Spirit;
 
-    public Character(int nId, string nName, Race nRace, Job nJob, int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct, int nBodyId, int nHairId, int nHairColorId, Equipment nEquipment)
+    public Character(int nId, string nName, Race nRace, Job nJob, int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct, 
+        int nBodyId, int nHairId, int nHairColorId, Equipment nEquipment)
     {
         Race = nRace;
         Job = nJob;
@@ -102,6 +104,7 @@ public class Character
         Level = nLevel;
     }
 
+    #region References
     public void SetRace(Race nRace)
     {
         Race = nRace;
@@ -116,6 +119,7 @@ public class Character
     {
         Equipment = nEquipment;
     }
+    #endregion
 
     #region All Stats
     public void SetStats(int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct)

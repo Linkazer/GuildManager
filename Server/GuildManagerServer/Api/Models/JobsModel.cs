@@ -1,5 +1,8 @@
 namespace GuildManagerServer.Api.Models;
 
+/// <summary>
+/// Model for Jobs. Defines the Job data stored in the Database.
+/// </summary>
 public class JobModel
 {
     public int Id { get; set; }

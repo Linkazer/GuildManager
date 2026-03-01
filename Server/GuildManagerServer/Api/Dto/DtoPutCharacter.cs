@@ -1,5 +1,8 @@
 namespace GuildManagerServer.Api.Dto;
 
+/// <summary>
+/// DTO used to update an existing Character.
+/// </summary>
 public record class DtoPutCharacter
 {
     public string Name { get; set; } = string.Empty;

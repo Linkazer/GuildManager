@@ -1,5 +1,8 @@
 namespace GuildManagerServer.Api.Dto;
 
+/// <summary>
+/// DTO used to create a new Character.
+/// </summary>
 public record class DtoPostCharacter
 {
     public string Name { get; set; } = string.Empty;

@@ -3,8 +3,13 @@ using GuildManagerServer.Domain;
 
 namespace GuildManagerServer.Api.Mapping;
 
-public static class RaceMapping
+public static class RaceMapper
 {
+    /// <summary>
+    /// Map a RaceModel to an Race.
+    /// </summary>
+    /// <param name="model">The Model to map.</param>
+    /// <returns></returns>
     public static Race ToRace(this RaceModel model)
     {
         return new Race

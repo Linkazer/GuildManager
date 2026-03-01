@@ -1,5 +1,8 @@
 namespace GuildManagerServer.Domain;
 
+/// <summary>
+/// Domain class for Characters' Race.
+/// </summary>
 public class Race
 {
     public int Id { get; set; }

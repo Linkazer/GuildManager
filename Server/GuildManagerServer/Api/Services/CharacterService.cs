@@ -3,7 +3,9 @@ using GuildManagerServer.Api.Mapping;
 using GuildManagerServer.Api.Models;
 using GuildManagerServer.Api.Repositories;
 using GuildManagerServer.Api.Results;
+using GuildManagerServer.Application.Command;
 using GuildManagerServer.Domain;
+using GuildManagerServer.Domain.Factory;
 
 namespace GuildManagerServer.Api.Services;
 
@@ -26,7 +28,14 @@ public class CharacterService : ICharacterService
     {
         List<CharacterModel> models = await repository.GetAllModelsAsync();
 
-        return Result<List<Character>>.Success(ResultCode.DataFound, models.Select(c => c.ToCharacter()).ToList());
+        List<Result<Character>> results = models.Select(c => CharacterFactory.TryCreate(c)).ToList();
+
+        if(results.Any(r => !r.Succeed))
+        {
+            return Result<List<Character>>.Failure(ResultCode.CharacterNotfound);
+        }
+
+        return Result<List<Character>>.Success(ResultCode.DataFound, results.Select(r => r.Data).ToList());
     }
 
     public async Task<Result<Character>> GetByIdAsync(int id)
@@ -38,10 +47,12 @@ public class CharacterService : ICharacterService
             return Result<Character>.Failure(ResultCode.CharacterNotfound);
         }
 
-        return Result<Character>.Success(ResultCode.DataFound, model.ToCharacter());
+        Result<Character> getterResult = CharacterFactory.TryCreate(model);
+
+        return getterResult;
     }
 
-    public async Task<Result<Character>> CreateCharacterAsync(DtoPostCharacter characterToCreate)
+    public async Task<Result<Character>> CreateCharacterAsync(CreateCharacterCommand characterToCreate)
     {
         RaceModel? raceModel = await raceRepository.GetByIdAsync(characterToCreate.RaceId);
         if(raceModel == null)
@@ -61,24 +72,20 @@ public class CharacterService : ICharacterService
             return Result<Character>.Failure(ResultCode.EquipmentNotFound);
         }
 
-        try
+        Result<Character> creationResult = CharacterFactory.TryCreate(characterToCreate, raceModel.ToRace(), jobModel.ToJob(), equipmentModel.ToEquipment());
+
+        if(creationResult.Succeed && creationResult.Data != null)
         {
-            Character newCharacter = characterToCreate.ToCharacter(raceModel.ToRace(), jobModel.ToJob(), equipmentModel.ToEquipment());
+            CharacterModel model = creationResult.Data.ToModel(raceModel, jobModel, equipmentModel);
+            await repository.AddModelAsync(model);
 
-            CharacterModel model = newCharacter.ToModel(raceModel, jobModel, equipmentModel);
-            await repository.AddModel(model);
-
-            newCharacter.SetId(model.Id);
-
-            return Result<Character>.Success(ResultCode.DataCreated, newCharacter);
+            creationResult.Data.SetId(model.Id);
         }
-        catch (ArgumentException ex)
-        {
-            return Result<Character>.Failure(ResultCode.InvalidCharacterData, ex.Message);
-        }
+
+        return creationResult;
     }
 
-    public async Task<Result<Character>> UpdateCharacterAsync(int id, DtoPutCharacter updatedCharacter)
+    public async Task<Result<Character>> UpdateCharacterAsync(int id, UpdateCharacterCommand updatedCharacter)
     {
         CharacterModel? modelToUpdate = await repository.GetModelByIdAsync(id);
 
@@ -87,9 +94,11 @@ public class CharacterService : ICharacterService
             return Result<Character>.Failure(ResultCode.CharacterNotfound);
         }
 
-        try
+        Result<Character> creationResult = CharacterFactory.TryCreate(modelToUpdate);
+
+        if(creationResult.Succeed && creationResult.Data != null)
         {
-            Character character = modelToUpdate.ToCharacter();
+            Character character = creationResult.Data;
 
             //Updates Character. CODE REVIEW : Mettre les setters en private
             character.SetName(updatedCharacter.Name);
@@ -154,13 +163,13 @@ public class CharacterService : ICharacterService
             modelToUpdate.JobId = character.Job.Id;
             modelToUpdate.EquipmentId = character.Equipment.Id;
 
-            await repository.UpdateModel(modelToUpdate);
+            await repository.UpdateModelAsync(modelToUpdate);
 
             return Result<Character>.Success(ResultCode.SimpleValidate);
         }
-        catch (ArgumentException ex)
+        else
         {
-            return Result<Character>.Failure(ResultCode.InvalidCharacterData, ex.Message);
+            return creationResult;
         }
     }
 

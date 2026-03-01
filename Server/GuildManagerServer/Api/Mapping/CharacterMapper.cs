@@ -1,49 +1,24 @@
 using GuildManagerServer.Api.Dto;
 using GuildManagerServer.Api.Models;
+using GuildManagerServer.Application.Command;
 using GuildManagerServer.Domain;
 
 namespace GuildManagerServer.Api.Mapping;
 
-public static class CharacterMapping
+/// <summary>
+/// Mapper for the Character, with Domain, DTO and Model classes.
+/// </summary>
+public static class CharacterMapper
 {
-    public static Character ToCharacter(this CharacterModel characterModel)
-    {
-        if(characterModel.Race == null)
-        {
-            throw new InvalidOperationException("Race must be included in the CharacterModel.");
-        }
-
-        if(characterModel.Job == null)
-        {
-            throw new InvalidOperationException("Job must be included in the CharacterModel.");
-        }
-
-        if(characterModel.Equipment == null)
-        {
-            throw new InvalidOperationException("Equipment must be included in the CharacterModel.");
-        }
-
-        return new Character
-        (
-            characterModel.Id,
-            characterModel.Name,
-            characterModel.Race.ToRace(),
-            characterModel.Job.ToJob(),
-            characterModel.Level,
-
-            characterModel.Strength,
-            characterModel.Spirit,
-            characterModel.Presence,
-            characterModel.Dexterity,
-            characterModel.Instinct,
-
-            characterModel.BodyId,
-            characterModel.HairId,
-            characterModel.HairColorId,
-            characterModel.Equipment.ToEquipment()
-        );
-    }
-
+    #region Model
+    /// <summary>
+    /// Map a Character to a its Model.
+    /// </summary>
+    /// <param name="character">The Character to map.</param>
+    /// <param name="race">The corresponding RaceModel to link.</param>
+    /// <param name="job">The corresponding JobModel to link.</param>
+    /// <param name="equipment">The corresponding EquipmentMode to link.</param>
+    /// <returns></returns>
     public static CharacterModel ToModel(this Character character, RaceModel race, JobModel job, EquipmentModel equipment)
     {
         return new CharacterModel
@@ -69,12 +44,18 @@ public static class CharacterMapping
             Equipment = equipment
         };
     }
+    #endregion
 
+    #region DTO
+    /// <summary>
+    /// Map a Character to its GetCharacter DTO.
+    /// </summary>
+    /// <param name="character">The Character to map.</param>
+    /// <returns></returns>
     public static DtoGetCharacter ToDtoGetCharacter(this Character character)
     {
         return new DtoGetCharacter
         {
-            Id = character.Id,
             Name = character.Name,
             RaceId = character.Race.Id,
             JobId = character.Job.Id,
@@ -96,26 +77,45 @@ public static class CharacterMapping
             Will = character.Will
         };
     }
+    #endregion
 
-    public static Character ToCharacter(this DtoPostCharacter postCharacter, Race race, Job job, Equipment equipment)
+    #region Command
+    public static CreateCharacterCommand ToCommand(this DtoPostCharacter postCharacter)
     {
-        return new Character
-        (
+        return new CreateCharacterCommand(
             postCharacter.Name,
-            race,
-            job,
+            postCharacter.RaceId,
+            postCharacter.JobId,
             postCharacter.Level,
-
             postCharacter.Strength,
             postCharacter.Spirit,
             postCharacter.Presence,
             postCharacter.Dexterity,
             postCharacter.Instinct,
-
             postCharacter.BodyId,
             postCharacter.HairId,
             postCharacter.HairColorId,
-            equipment
+            postCharacter.EquipmentId
         );
     }
+
+    public static UpdateCharacterCommand ToCommand(this DtoPutCharacter putCharacter)
+    {
+        return new UpdateCharacterCommand(
+            putCharacter.Name,
+            putCharacter.RaceId,
+            putCharacter.JobId,
+            putCharacter.Level,
+            putCharacter.Strength,
+            putCharacter.Spirit,
+            putCharacter.Presence,
+            putCharacter.Dexterity,
+            putCharacter.Instinct,
+            putCharacter.BodyId,
+            putCharacter.HairId,
+            putCharacter.HairColorId,
+            putCharacter.EquipmentId
+        );
+    }
+    #endregion
 }

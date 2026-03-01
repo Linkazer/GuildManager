@@ -3,8 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GuildManagerServer.Api.Mapping;
 
-public static class ErrorMapper
+/// <summary>
+/// Mapper for the Result class.
+/// </summary>
+public static class ResultMapper
 {
+    /// <summary>
+    /// Get a IActionResult from a Result.
+    /// </summary>
+    /// <typeparam name="T">The type of data the Result wanted.</typeparam>
+    /// <param name="controller">The controller in which we want to get the Result.</param>
+    /// <param name="result">The Result sent by the Service.</param>
+    /// <returns>The IActionResult corresponding to the Result.</returns>
     public static IActionResult GetResult<T>(this ControllerBase controller, Result<T> result)
     {
         switch(result.ResultCode)

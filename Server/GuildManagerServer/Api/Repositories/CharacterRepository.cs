@@ -1,7 +1,8 @@
 using GuildManagerServer.Api.Data;
-using GuildManagerServer.Api.Mapping;
 using GuildManagerServer.Api.Models;
+using GuildManagerServer.Api.Results;
 using GuildManagerServer.Domain;
+using GuildManagerServer.Domain.Factory;
 using Microsoft.EntityFrameworkCore;
 
 namespace GuildManagerServer.Api.Repositories;
@@ -19,18 +20,19 @@ public class CharacterRepository : ICharacterRepository
         return await context.Character.Include(c => c.Race).Include(c => c.Job).Include(c => c.Equipment).ToListAsync();
     }
 
+
     public async Task<CharacterModel?> GetModelByIdAsync(int id)
     {
         return await context.Character.Include(c => c.Race).Include(c => c.Job).Include(c => c.Equipment).FirstOrDefaultAsync(c => c.Id == id);
     }
 
-    public async Task AddModel(CharacterModel modelToSave)
+    public async Task AddModelAsync(CharacterModel modelToSave)
     {
         context.Character.Add(modelToSave);
         await context.SaveChangesAsync();
     }
 
-    public async Task UpdateModel(CharacterModel modelToUpdate)
+    public async Task UpdateModelAsync(CharacterModel modelToUpdate)
     {
         context.Character.Update(modelToUpdate);
         await context.SaveChangesAsync();

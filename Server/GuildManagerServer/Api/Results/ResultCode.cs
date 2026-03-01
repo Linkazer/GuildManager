@@ -1,5 +1,8 @@
 namespace GuildManagerServer.Api.Results;
 
+/// <summary>
+/// All available Result that can be mapped.
+/// </summary>
 public enum ResultCode
 {
     #region Valid Result

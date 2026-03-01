@@ -1,14 +1,34 @@
 GET http://localhost:5181/api/Character
 
 ###
-GET http://localhost:5181/api/Character/4
+GET http://localhost:5181/api/Character/2
 
 ###
 POST http://localhost:5181/api/Character
 Content-Type: application/json
 
 {
-  "Name": "Torak",
+  "Name": "Sara",
+  "RaceId": 1,
+  "JobId": 1,
+  "Level": 1,
+  "Strength": -1,
+  "Spirit": 2,
+  "Presence": 0,
+  "Dexterity": 0,
+  "Instinct": 1,
+  "BodyId": 1,
+  "HairId": 2,
+  "HairColorId": 1,
+  "EquipmentId": 1
+}
+
+###
+PUT http://localhost:5181/api/Character/2
+Content-Type: application/json
+
+{
+  "Name": "Thomas",
   "RaceId": 1,
   "JobId": 1,
   "Level": 1,
@@ -17,26 +37,6 @@ Content-Type: application/json
   "Presence": -1,
   "Dexterity": 1,
   "Instinct": 0,
-  "BodyId": 2,
-  "HairId": 1,
-  "HairColorId": 2,
-  "EquipmentId": 1
-}
-
-###
-PUT http://localhost:5181/api/Character/5
-Content-Type: application/json
-
-{
-  "Name": "Eliette",
-  "RaceId": 1,
-  "JobId": 1,
-  "Level": 1,
-  "Strength": 0,
-  "Spirit": -1,
-  "Presence": 2,
-  "Dexterity": 0,
-  "Instinct": 1,
   "BodyId": 3,
   "HairId": 2,
   "HairColorId": 5,

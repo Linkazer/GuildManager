@@ -1,8 +1,10 @@
 namespace GuildManagerServer.Api.Dto;
 
+/// <summary>
+/// DTO use to get all informations of a Character.
+/// </summary>
 public record class DtoGetCharacter
 {
-    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public int RaceId  { get; set; }
     public int JobId { get; set; }

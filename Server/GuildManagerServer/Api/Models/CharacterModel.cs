@@ -1,5 +1,8 @@
 namespace GuildManagerServer.Api.Models;
 
+/// <summary>
+/// Model for Characters. Defines the Character data stored in the Database.
+/// </summary>
 public class CharacterModel
 {
     public int Id { get; set; }

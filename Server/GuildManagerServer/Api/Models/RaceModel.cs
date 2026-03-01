@@ -1,5 +1,8 @@
 namespace GuildManagerServer.Api.Models;
 
+/// <summary>
+/// Model for Races. Defines the Race data stored in the Database.
+/// </summary>
 public class RaceModel
 {
     public int Id { get; set; }

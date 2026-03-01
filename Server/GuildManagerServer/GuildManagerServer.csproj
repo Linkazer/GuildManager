@@ -17,11 +17,11 @@
     <Folder Include="Api\Data\" />
     <Folder Include="Api\Data\Migrations\" />
     <Folder Include="Api\Dto\" />
-    <Folder Include="Api\Mapping\" />
     <Folder Include="Api\Repositories\" />
     <Folder Include="Api\Services\" />
+    <Folder Include="Application\" />
+    <Folder Include="Application\Command\" />
     <Folder Include="Databases\" />
-    <Folder Include="Domain\" />
   </ItemGroup>
 
 </Project>

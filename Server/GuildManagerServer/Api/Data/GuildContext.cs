@@ -1,11 +1,11 @@
 using GuildManagerServer.Api.Models;
-using GuildManagerServer.Domain;
-using Microsoft.Build.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace GuildManagerServer.Api.Data;
 
+/// <summary>
+/// DB Context for the Guild.
+/// </summary>
 public class GuildContext : DbContext
 {
     public GuildContext(DbContextOptions<GuildContext> options)
@@ -22,14 +22,17 @@ public class GuildContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        //Create base data for Races. Note that we could also generate it manualy using SQL Server.
         modelBuilder.Entity<RaceModel>().HasData(
             new {Id = 1, Name = "Human", Strength = 0, Spirit = 0, Presence = 0, Dexterity = 0, Instinct = 0, Health = 10}
         );
 
+        //Create base data for Jobs. Note that we could also generate it manualy using SQL Server.
         modelBuilder.Entity<JobModel>().HasData(
             new {Id = 1, Name = "Fighter", Strength = 0, Spirit = 0, Presence = 0, Dexterity = 0, Instinct = 0, HealthByLevel = 3}
         );
 
+        //Create base data for Equipments. Note that we could also generate it manualy using SQL Server.
         modelBuilder.Entity<EquipmentModel>().HasData(
             new {Id = 1, Name = "Basic clothes"}
         );

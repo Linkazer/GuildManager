@@ -1,4 +1,3 @@
-using System;
 using GuildManagerServer.Api.Data;
 using GuildManagerServer.Api.Models;
 

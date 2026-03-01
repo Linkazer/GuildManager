@@ -1,5 +1,8 @@
 namespace GuildManagerServer.Domain;
 
+/// <summary>
+/// Domain class for Characters' Job.
+/// </summary>
 public class Job
 {
     public int Id { get; set; }
