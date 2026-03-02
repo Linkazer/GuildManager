@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23d5a08d176c9964a9e66408c32fcb9d, type: 3}
+  m_Name: Equipment_Cloth
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCustomEquipment
+  equipmentId: 1
+  bodyPrefabs:
+  - {fileID: 6948799726150704104, guid: 838c3e8deae4c7d4ca2e373a5da05832, type: 3}
+  - {fileID: 6948799726150704104, guid: 1450c381373645b4381ffda174b5b6e7, type: 3}
+  - {fileID: 6948799726150704104, guid: 7d1e67392df781b44b7f157c7e2254e9, type: 3}
+  - {fileID: 6948799726150704104, guid: ea03a0a0d7bb98a4d9dff8a46e626e5f, type: 3}

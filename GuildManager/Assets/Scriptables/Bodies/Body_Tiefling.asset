@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a5767797822984fb648ac30f4d8df3, type: 3}
+  m_Name: Body_Tiefling
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCustomBody
+  raceId: 3
+  bodyPrefabs:
+  - {fileID: 5685597515228401758, guid: ff0fa8164843a0247a1abbe6356fbfdd, type: 3}
+  - {fileID: 5685597515228401758, guid: 406d3f7dc02079549a6c6764ff3509ba, type: 3}
+  - {fileID: 5685597515228401758, guid: 21b9054259808c34fb9ccf9d7fa919c0, type: 3}
+  - {fileID: 5685597515228401758, guid: 38b39f398134ee548863f34507150bcc, type: 3}

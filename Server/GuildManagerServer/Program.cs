@@ -2,6 +2,7 @@ using GuildManagerServer.Api.Data;
 using GuildManagerServer.Api.Repositories;
 using GuildManagerServer.Api.Services;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,10 @@ builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(o =>
+{
+    o.SerializerSettings.ContractResolver = new DefaultContractResolver();
+});
 
 var app = builder.Build();
 

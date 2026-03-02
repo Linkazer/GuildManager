@@ -56,16 +56,17 @@ public static class CharacterMapper
     {
         return new DtoGetCharacter
         {
+            Id = character.Id,
             Name = character.Name,
             RaceId = character.Race.Id,
             JobId = character.Job.Id,
             Level = character.Level,
 
-            Strength = character.Strength,
-            Spirit = character.Spirit,
-            Presence = character.Presence,
-            Dexterity = character.Dexterity,
-            Instinct = character.Instinct,
+            Strength = character.TotalStrength,
+            Spirit = character.TotalSpirit,
+            Presence = character.TotalPresence,
+            Dexterity = character.TotalDexterity,
+            Instinct = character.TotalInstinct,
 
             BodyId = character.BodyId,
             HairId = character.HairId,

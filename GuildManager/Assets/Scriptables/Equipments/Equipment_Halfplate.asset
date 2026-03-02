@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23d5a08d176c9964a9e66408c32fcb9d, type: 3}
+  m_Name: Equipment_Halfplate
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCustomEquipment
+  equipmentId: 3
+  bodyPrefabs:
+  - {fileID: 6948799726150704104, guid: 07594109868856747a864bf3dfe63edc, type: 3}
+  - {fileID: 6948799726150704104, guid: 3896d9244849e2543b758691b959476e, type: 3}
+  - {fileID: 6948799726150704104, guid: 518bce0230ce5de408d6b9209191b994, type: 3}
+  - {fileID: 6948799726150704104, guid: 56dc50a09edc2304fb9ad1984665be39, type: 3}

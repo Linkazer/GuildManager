@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a5767797822984fb648ac30f4d8df3, type: 3}
+  m_Name: Body_Human
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCustomBody
+  raceId: 1
+  bodyPrefabs:
+  - {fileID: 5685597515228401758, guid: aa75b541b7196f049838008930f0bab3, type: 3}
+  - {fileID: 5685597515228401758, guid: 31eaa15a7983ad246a66693ef3f07407, type: 3}
+  - {fileID: 5685597515228401758, guid: 337169127a03e9344a60dbbb5b219c38, type: 3}
+  - {fileID: 5685597515228401758, guid: 7c5f361cffa44e44eb79832315108631, type: 3}

@@ -33,8 +33,14 @@ public class Character
 
     //Calculated
     public int MaxHealth => Race.Health + Job.HealthByLevel * Level;
-    public int Dodge => BaseDodge + Dexterity;
-    public int Will => BaseWill + Spirit;
+    public int Dodge => BaseDodge + TotalDexterity;
+    public int Will => BaseWill + TotalSpirit;
+
+    public int TotalStrength => Strength + Race.Strength + Job.Strength;
+    public int TotalSpirit => Spirit + Race.Spirit + Job.Spirit;
+    public int TotalPresence => Presence + Race.Presence + Job.Presence;
+    public int TotalDexterity => Dexterity + Race.Dexterity + Job.Dexterity;
+    public int TotalInstinct => Instinct + Race.Instinct + Job.Instinct;
 
     public Character(int nId, string nName, Race nRace, Job nJob, int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct, 
         int nBodyId, int nHairId, int nHairColorId, Equipment nEquipment)
@@ -126,13 +132,11 @@ public class Character
     {
         SetLevel(nLevel);
 
-        int totalStartingStats = Race.GetTotalStats() + Job.GetTotalStats() + StartStats;
-
-        int totalAllowed = totalStartingStats + (StatsByTwoLevel * (Level / 2));
+        int totalAllowed = StartStats + (StatsByTwoLevel * (Level / 2));
 
         int newTotal = nStrength + nSpirit + nPresence + nDexterity + nInstinct;
 
-        if(newTotal < totalStartingStats || newTotal > totalAllowed)
+        if(newTotal < StartStats || newTotal > totalAllowed)
         {
             throw new ArgumentOutOfRangeException("Invalid stats (Total is too small or too big).");
         }
@@ -147,7 +151,7 @@ public class Character
     #region Individual Stats
     public void SetStrength(int nStrength)
     {
-        if(nStrength - (Race.Strength + Job.Strength + StartStats) > Level / 2)
+        if(nStrength - StartStats > Level / 2)
         {
             throw new ArgumentOutOfRangeException("Invalid stats : Strength is too high.");
         }
@@ -157,7 +161,7 @@ public class Character
 
     public void SetSpirit(int nSpirit)
     {
-        if(nSpirit - (Race.Spirit + Job.Spirit + StartStats) > Level / 2)
+        if(nSpirit - StartStats > Level / 2)
         {
              throw new ArgumentOutOfRangeException("Invalid stats : Spirit is too high.");
         }
@@ -167,7 +171,7 @@ public class Character
 
     public void SetPresence(int nPresence)
     {
-        if(nPresence - (Race.Presence + Job.Presence + StartStats) > Level / 2)
+        if(nPresence - StartStats > Level / 2)
         {
              throw new ArgumentOutOfRangeException("Invalid stats : Presence is too high.");
         }
@@ -177,7 +181,7 @@ public class Character
 
     public void SetDexterity(int nDexterity)
     {
-        if(nDexterity - (Race.Dexterity + Job.Dexterity + StartStats) > Level / 2)
+        if(nDexterity - StartStats > Level / 2)
         {
              throw new ArgumentOutOfRangeException("Invalid stats : Dexterity is too high.");
         }
@@ -187,7 +191,7 @@ public class Character
 
     public void SetInstinct(int nInstinct)
     {
-        if(nInstinct - (Race.Instinct + Job.Instinct + StartStats) > Level / 2)
+        if(nInstinct - StartStats > Level / 2)
         {
              throw new ArgumentOutOfRangeException("Invalid stats : Instinct is too high.");
         }

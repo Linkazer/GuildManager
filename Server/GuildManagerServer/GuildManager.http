@@ -8,23 +8,23 @@ POST http://localhost:5181/api/Character
 Content-Type: application/json
 
 {
-  "Name": "Sara",
-  "RaceId": 1,
-  "JobId": 1,
+  "Name": "Nor",
+  "RaceId": 3,
+  "JobId": 3,
   "Level": 1,
-  "Strength": -1,
+  "Strength": 0,
   "Spirit": 2,
-  "Presence": 0,
+  "Presence": -1,
   "Dexterity": 0,
   "Instinct": 1,
   "BodyId": 1,
-  "HairId": 2,
-  "HairColorId": 1,
+  "HairId": 3,
+  "HairColorId": 4,
   "EquipmentId": 1
 }
 
 ###
-PUT http://localhost:5181/api/Character/2
+PUT http://localhost:5181/api/Character/6
 Content-Type: application/json
 
 {

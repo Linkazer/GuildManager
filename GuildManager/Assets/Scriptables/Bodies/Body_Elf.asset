@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a5767797822984fb648ac30f4d8df3, type: 3}
+  m_Name: Body_Elf
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCustomBody
+  raceId: 2
+  bodyPrefabs:
+  - {fileID: 5685597515228401758, guid: 40f8a4339220e8341b710c3c2256e738, type: 3}
+  - {fileID: 5685597515228401758, guid: 341ea5a60926ac044b4357d7862dbe83, type: 3}
+  - {fileID: 5685597515228401758, guid: 9ebd4fe02fa4df74ba2e879641abacfe, type: 3}
+  - {fileID: 5685597515228401758, guid: 60d9d792ab991aa4fa40618a621b2f69, type: 3}

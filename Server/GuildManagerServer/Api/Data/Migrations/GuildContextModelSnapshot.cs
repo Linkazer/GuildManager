@@ -91,7 +91,22 @@ namespace GuildManagerServer.Api.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Basic clothes"
+                            Name = "Clothe"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Leather armor"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Chain mail"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Plate armor"
                         });
                 });
 
@@ -137,6 +152,28 @@ namespace GuildManagerServer.Api.Data.Migrations
                             Name = "Fighter",
                             Presence = 0,
                             Spirit = 0,
+                            Strength = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Dexterity = 0,
+                            HealthByLevel = 2,
+                            Instinct = 0,
+                            Name = "Bard",
+                            Presence = 1,
+                            Spirit = 0,
+                            Strength = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Dexterity = 0,
+                            HealthByLevel = 1,
+                            Instinct = 0,
+                            Name = "Mage",
+                            Presence = 0,
+                            Spirit = 1,
                             Strength = 0
                         });
                 });
@@ -179,10 +216,32 @@ namespace GuildManagerServer.Api.Data.Migrations
                             Id = 1,
                             Dexterity = 0,
                             Health = 10,
-                            Instinct = 0,
+                            Instinct = 1,
                             Name = "Human",
-                            Presence = 0,
+                            Presence = 1,
                             Spirit = 0,
+                            Strength = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Dexterity = 1,
+                            Health = 10,
+                            Instinct = 0,
+                            Name = "Elf",
+                            Presence = 0,
+                            Spirit = 1,
+                            Strength = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Dexterity = 0,
+                            Health = 10,
+                            Instinct = 0,
+                            Name = "Tiefling",
+                            Presence = 1,
+                            Spirit = 1,
                             Strength = 0
                         });
                 });
