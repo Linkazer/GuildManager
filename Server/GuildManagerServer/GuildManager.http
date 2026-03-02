@@ -20,7 +20,7 @@ Content-Type: application/json
   "BodyId": 1,
   "HairId": 3,
   "HairColorId": 4,
-  "EquipmentId": 1
+  "EquipmentId": 2
 }
 
 ###

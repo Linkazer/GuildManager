@@ -165,7 +165,7 @@ public class CharacterService : ICharacterService
 
             await repository.UpdateModelAsync(modelToUpdate);
 
-            return Result<Character>.Success(ResultCode.SimpleValidate);
+            return Result<Character>.Success(ResultCode.SimpleValidate, character);
         }
         else
         {
@@ -183,6 +183,6 @@ public class CharacterService : ICharacterService
         }
 
         await repository.DeleteModelAsync(id);
-        return Result<Character>.Success(ResultCode.SimpleValidate);
+        return Result<Character>.Success(ResultCode.SimpleValidate, foundCharacterResult.Data);
     }
 }

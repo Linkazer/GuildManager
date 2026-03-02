@@ -30,7 +30,7 @@ public class CharacterController : ControllerBase
     {
         Result<List<Character>> result = await service.GetAllAsync();
 
-        Result<List<DtoGetCharacter>> mappedResult = result.Map(list => list.Select(c => c.ToDtoGetCharacter()).ToList());
+        Result<List<DtoGetCharacter>> mappedResult = result.MapData(list => list.Select(c => c.ToDtoGetCharacter()).ToList());
 
         return this.GetResult(mappedResult);
     }
@@ -45,7 +45,7 @@ public class CharacterController : ControllerBase
     {
         Result<Character> result = await service.GetByIdAsync(id);
 
-        Result<DtoGetCharacter> dtoResult = result.Map(c => c.ToDtoGetCharacter());
+        Result<DtoGetCharacter> dtoResult = result.MapData(c => c.ToDtoGetCharacter());
 
         return this.GetResult(dtoResult);
     }
@@ -65,7 +65,7 @@ public class CharacterController : ControllerBase
             return CreatedAtAction(nameof(GetById), new { id = result.Data.Id }, result.Data.ToDtoGetCharacter());
         }
 
-        Result<DtoGetCharacter> dtoResult = result.Map(c => c.ToDtoGetCharacter());
+        Result<DtoGetCharacter> dtoResult = result.MapData(c => c.ToDtoGetCharacter());
 
         return this.GetResult(dtoResult);
     }
@@ -81,7 +81,7 @@ public class CharacterController : ControllerBase
     {
         Result<Character> result = await service.UpdateCharacterAsync(id, updateDto.ToCommand());
 
-        Result<DtoGetCharacter> dtoResult = result.Map(c => c.ToDtoGetCharacter());
+        Result<DtoGetCharacter> dtoResult = result.MapData(c => c.ToDtoGetCharacter());
 
         return this.GetResult(dtoResult);
     }
@@ -96,7 +96,7 @@ public class CharacterController : ControllerBase
     {
         Result<Character> result = await service.DeleteCharacterAsync(id);
 
-        Result<DtoGetCharacter> dtoResult = result.Map(c => c.ToDtoGetCharacter());
+        Result<DtoGetCharacter> dtoResult = result.MapData(c => c.ToDtoGetCharacter());
 
         return this.GetResult(dtoResult);
     }

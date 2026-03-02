@@ -1,4 +1,6 @@
 using Mono.Cecil;
+using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -6,6 +8,15 @@ using UnityEngine.Networking;
 
 namespace GuildManager
 {
+    [Serializable]
+    public class ValidationProblemDetails
+    {
+        public string type;
+        public string title;
+        public int status;
+        public Dictionary<string, string[]> errors;
+    }
+
     public static class HttpRequests
     {
         public static async Task<Returned> Get<Returned>(string url) where Returned : class
@@ -99,6 +110,12 @@ namespace GuildManager
         private static bool GetRequestResult(UnityWebRequest request)
         {
             Debug.Log(request.responseCode);
+            Debug.Log(request.error);
+
+            if(request.responseCode == 400)
+            {
+                Debug.Log(request.downloadHandler.text);
+            }
 
             //CODE REVIEW : Switch pour renvoyer les différents types d'erreurs ?
             return request.result == UnityWebRequest.Result.Success;

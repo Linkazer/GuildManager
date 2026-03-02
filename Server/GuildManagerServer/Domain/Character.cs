@@ -1,3 +1,5 @@
+using GuildManagerServer.Api.Results;
+
 namespace GuildManagerServer.Domain;
 
 /// <summary>
@@ -42,72 +44,107 @@ public class Character
     public int TotalDexterity => Dexterity + Race.Dexterity + Job.Dexterity;
     public int TotalInstinct => Instinct + Race.Instinct + Job.Instinct;
 
-    public Character(int nId, string nName, Race nRace, Job nJob, int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct, 
+    // Made private so we have to use TryCreate to create a new Character.
+    private Character(int nId, string nName, Race nRace, Job nJob, int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct, 
         int nBodyId, int nHairId, int nHairColorId, Equipment nEquipment)
     {
+        Id = nId;
+        Name = nName;
         Race = nRace;
         Job = nJob;
+        Level = nLevel;
+        Strength = nStrength;
+        Spirit = nSpirit;
+        Presence = nPresence;
+        Dexterity = nDexterity;
+        Instinct = nInstinct;
+        BodyId = nBodyId;
+        HairId = nHairId;
+        HairColorId = nHairColorId;
         Equipment = nEquipment;
-
-        SetCharacter(nId, nName, nRace, nJob, nLevel, nStrength, nSpirit, nPresence, nDexterity, nInstinct, nBodyId, nHairId, nHairColorId, nEquipment);
     }
 
-    public Character(string nName, Race nRace, Job nJob, int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct, int nBodyId, int nHairId, int nHairColorId, Equipment nEquipment)
+    public static Result<Character> TryCreate(string nName, Race nRace, Job nJob, int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct, 
+        int nBodyId, int nHairId, int nHairColorId, Equipment nEquipment)
     {
-        SetName(nName);
+        Character createdCharacter = new Character(
+            0,
+            "Newly Created",
+            nRace, nJob,
+            1, //Level
+            0, 0, 0, 0, 0, //Stats
+            1, 1, 1, //Custo
+            nEquipment
+        );
 
-        Race = nRace;
-        Job = nJob;
-        Equipment = nEquipment;
+        Result result = new Result();
 
-        SetStats(nLevel, nStrength, nSpirit, nPresence, nDexterity, nInstinct);
-
-        SetPersonalisation(nBodyId, nHairId, nHairColorId);
-    }
-
-    public void SetCharacter(int nId, string nName, Race nRace, Job nJob, int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct, int nBodyId, int nHairId, int nHairColorId, Equipment nEquipment)
-    {
-        SetId(nId);
-
-        SetName(nName);
+        result = createdCharacter.SetName(nName);
+        if(!result.Succeed)
+        {
+            return Result<Character>.FromResult(result);
+        }
         
-        Race = nRace;
-        Job = nJob;
-        Equipment = nEquipment;
+        result = createdCharacter.SetStats(nLevel, nStrength, nSpirit, nPresence, nDexterity, nInstinct);
+        if(!result.Succeed)
+        {
+            return Result<Character>.FromResult(result);
+        }
 
-        SetStats(nLevel, nStrength, nSpirit, nPresence, nDexterity, nInstinct);
+        result = createdCharacter.SetPersonalisation(nBodyId, nHairId, nHairColorId);
+        if(!result.Succeed)
+        {
+            return Result<Character>.FromResult(result);
+        }
 
-        SetPersonalisation(nBodyId, nHairId, nHairColorId);
+        return Result<Character>.Success(ResultCode.DataCreated, createdCharacter);
     }
 
-    public void SetId(int nId)
+    public static Result<Character> TryCreate(int nId, string nName, Race nRace, Job nJob, int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct, 
+        int nBodyId, int nHairId, int nHairColorId, Equipment nEquipment)
     {
         if(nId < 1)
         {
-            throw new ArgumentOutOfRangeException("Id can't be less than 1.");
+            return Result<Character>.Failure(ResultCode.InvalidCharacterData, new KeyValuePair<string, string[]>("Id", new[] {"Id can't be lower than 1."}));
+        }
+
+        return TryCreate(nName, nRace, nJob, nLevel, nStrength, nSpirit, nPresence, nDexterity, nInstinct, nBodyId, nHairId, nHairColorId, nEquipment);
+    }
+
+    public Result SetId(int nId)
+    {
+        if(nId < 1)
+        {
+            return Result.Failure(ResultCode.InvalidCharacterData, new KeyValuePair<string, string[]>("Id", new[] {"Id can't be lower than 1."}));
         }
 
         Id = nId;
+
+        return Result.Success(ResultCode.SimpleValidate);
     }
 
-    public void SetName(string nName)
+    public Result SetName(string nName)
     {
         if(nName == string.Empty || nName.Length > MaxNameLength)
         {
-            throw new ArgumentException("Invalid Character name");
+            return Result.Failure(ResultCode.InvalidCharacterData, new KeyValuePair<string, string[]>("Name", new[] {$"Name can't be empty or longer than {MaxNameLength}."}));
         }
 
         Name = nName;
+        
+        return Result.Success(ResultCode.SimpleValidate);
     }
 
-    public void SetLevel(int nLevel)
+    public Result SetLevel(int nLevel)
     {
         if(nLevel < 1 || nLevel > 10)
         {
-            throw new ArgumentOutOfRangeException("Level must be between 1 and 10.");
+            return Result.Failure(ResultCode.InvalidCharacterData, new KeyValuePair<string, string[]>("Level", new[] {$"Level must be between 1 and 10."}));
         }
 
         Level = nLevel;
+
+        return Result.Success(ResultCode.SimpleValidate);
     }
 
     #region References
@@ -128,9 +165,15 @@ public class Character
     #endregion
 
     #region All Stats
-    public void SetStats(int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct)
+    public Result SetStats(int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct)
     {
-        SetLevel(nLevel);
+        Result result = new Result();
+
+        result = SetLevel(nLevel);
+        if(!result.Succeed)
+        {
+            return result;
+        }
 
         int totalAllowed = StartStats + (StatsByTwoLevel * (Level / 2));
 
@@ -138,95 +181,156 @@ public class Character
 
         if(newTotal < StartStats || newTotal > totalAllowed)
         {
-            throw new ArgumentOutOfRangeException("Invalid stats (Total is too small or too big).");
+            return Result.Failure(ResultCode.InvalidCharacterData, 
+                new KeyValuePair<string, string[]>("TotalStats", new[] {$"Total of stats ({newTotal}) cant be lower than {StartStats} or greater than {totalAllowed}."}));
         }
 
-        SetStrength(nStrength);
-        SetSpirit(nSpirit);
-        SetPresence(nPresence);
-        SetDexterity(nDexterity);
-        SetInstinct(nInstinct);
+        result = SetStrength(nStrength);
+        if(!result.Succeed)
+        {
+            return result;
+        }
+
+        result = SetSpirit(nSpirit);
+        if(!result.Succeed)
+        {
+            return result;
+        }
+        
+        result = SetPresence(nPresence);
+        if(!result.Succeed)
+        {
+            return result;
+        }
+
+        result = SetDexterity(nDexterity);
+        if(!result.Succeed)
+        {
+            return result;
+        }
+
+        result = SetInstinct(nInstinct);
+        if(!result.Succeed)
+        {
+            return result;
+        }
+
+        return Result.Success(ResultCode.SimpleValidate);
     }
 
     #region Individual Stats
-    public void SetStrength(int nStrength)
+    public Result SetStrength(int nStrength)
     {
-        if(nStrength - StartStats > Level / 2)
+        if(nStrength > StartStats + Level / 2)
         {
-            throw new ArgumentOutOfRangeException("Invalid stats : Strength is too high.");
+            return Result.Failure(ResultCode.InvalidCharacterData, 
+                new KeyValuePair<string, string[]>("Strength", new[] {$"Strength at level {Level} must not exceed {StartStats + Level / 2}."}));
         }
 
         Strength = nStrength;
+
+        return Result.Success(ResultCode.SimpleValidate);
     }
 
-    public void SetSpirit(int nSpirit)
+    public Result SetSpirit(int nSpirit)
     {
         if(nSpirit - StartStats > Level / 2)
         {
-             throw new ArgumentOutOfRangeException("Invalid stats : Spirit is too high.");
+            return Result.Failure(ResultCode.InvalidCharacterData, 
+                new KeyValuePair<string, string[]>("Spirit", new[] {$"Spirit at level {Level} must not exceed {StartStats + Level / 2}."}));
         }
 
         Spirit = nSpirit;
+
+        return Result.Success(ResultCode.SimpleValidate);
     }
 
-    public void SetPresence(int nPresence)
+    public Result SetPresence(int nPresence)
     {
         if(nPresence - StartStats > Level / 2)
         {
-             throw new ArgumentOutOfRangeException("Invalid stats : Presence is too high.");
+            return Result.Failure(ResultCode.InvalidCharacterData, 
+                new KeyValuePair<string, string[]>("Presence", new[] {$"Presence at level {Level} must not exceed {StartStats + Level / 2}."}));
         }
 
         Presence = nPresence;
+
+        return Result.Success(ResultCode.SimpleValidate);
     }
 
-    public void SetDexterity(int nDexterity)
+    public Result SetDexterity(int nDexterity)
     {
         if(nDexterity - StartStats > Level / 2)
         {
-             throw new ArgumentOutOfRangeException("Invalid stats : Dexterity is too high.");
+            return Result.Failure(ResultCode.InvalidCharacterData, 
+                new KeyValuePair<string, string[]>("Dexterity", new[] {$"Dexterity at level {Level} must not exceed {StartStats + Level / 2}."}));
         }
 
         Dexterity = nDexterity;
+
+        return Result.Success(ResultCode.SimpleValidate);
     }
 
-    public void SetInstinct(int nInstinct)
+    public Result SetInstinct(int nInstinct)
     {
         if(nInstinct - StartStats > Level / 2)
         {
-             throw new ArgumentOutOfRangeException("Invalid stats : Instinct is too high.");
+            return Result.Failure(ResultCode.InvalidCharacterData, 
+                new KeyValuePair<string, string[]>("Instinct", new[] {$"Instinct at level {Level} must not exceed {StartStats + Level / 2}."}));
         }
 
         Instinct = nInstinct;
+
+        return Result.Success(ResultCode.SimpleValidate);
     }
     #endregion
     #endregion
 
     #region  Personalisation
-    public void SetPersonalisation(int nBodyId, int nHairId, int nHairColorId)
+    public Result SetPersonalisation(int nBodyId, int nHairId, int nHairColorId)
     {
-        SetBody(nBodyId);
-        SetHair(nHairId, nHairColorId);
+        Result result = new Result();
+
+        result = SetBody(nBodyId);
+        if(!result.Succeed)
+        {
+            return result;
+        }
+
+        result = SetHair(nHairId, nHairColorId);
+        if(!result.Succeed)
+        {
+            return result;
+        }
+
+        return Result.Success(ResultCode.SimpleValidate);
     }
 
-    public void SetBody(int nBodyId)
+    public Result SetBody(int nBodyId)
     {
         if(nBodyId < 1)
         {
-            throw new ArgumentOutOfRangeException("Body id can't be less than 1.");
+            return Result.Failure(ResultCode.InvalidCharacterData, 
+                new KeyValuePair<string, string[]>("BodyId", new[] {"BodyId can't be lower than 1."}));
         }
 
         BodyId = nBodyId;
+
+        return Result.Success(ResultCode.SimpleValidate);
     }
 
-    public void SetHair(int nHairId, int nHairColorId)
+    public Result SetHair(int nHairId, int nHairColorId)
     {
         if(nHairId < 1 || nHairColorId < 1)
         {
-            throw new ArgumentOutOfRangeException("Hair and hair color id can't be less than 1.");
+            return Result.Failure(ResultCode.InvalidCharacterData, 
+                new KeyValuePair<string, string[]>("HairId", new[] {"HairId and HairColorId can't be lower than 1."}));
         }
 
         HairId = nHairId;
         HairColorId = nHairColorId;
+
+        return Result.Success(ResultCode.SimpleValidate);
     }
     #endregion
 }

@@ -28,11 +28,23 @@ public static class ResultMapper
             case ResultCode.CharacterNotfound:
                 return controller.NotFound("Character not found.");
             case ResultCode.InvalidCharacterData:
-                if(result.ErrorMessage == string.Empty)
+                if (result.ErrorMessage.Key == null || result.ErrorMessage.Value == null || result.ErrorMessage.Value.Length == 0)
                 {
                     return controller.BadRequest("Character data are not valid.");
                 }
-                return controller.BadRequest(result.ErrorMessage);
+
+                var errors = new Dictionary<string, string[]>
+                {
+                    [result.ErrorMessage.Key] = result.ErrorMessage.Value
+                };
+
+                var problemDetails = new ValidationProblemDetails(errors)
+                {
+                    Title = "Validation Failed",
+                    Status = StatusCodes.Status400BadRequest
+                };
+
+                return controller.BadRequest(problemDetails);
             case ResultCode.RaceNotFound:
                 return controller.NotFound("Race not found");
             case ResultCode.JobNotFound:
