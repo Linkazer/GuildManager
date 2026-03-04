@@ -1,4 +1,3 @@
-using GuildManagerServer.Api.Dto;
 using GuildManagerServer.Api.Mapping;
 using GuildManagerServer.Api.Models;
 using GuildManagerServer.Api.Repositories;
@@ -49,7 +48,12 @@ public class CharacterService : ICharacterService
 
         Result<Character> getterResult = CharacterFactory.TryCreate(model);
 
-        return getterResult;
+        if(!getterResult.Succeed)
+        {
+            return Result<Character>.Failure(ResultCode.CharacterNotfound);
+        }
+
+        return Result<Character>.Success(ResultCode.DataFound, getterResult.Data);
     }
 
     public async Task<Result<Character>> CreateCharacterAsync(CreateCharacterCommand characterToCreate)

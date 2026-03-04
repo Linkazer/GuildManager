@@ -16,5 +16,3 @@ MonoBehaviour:
   bodyPrefabs:
   - {fileID: 5685597515228401758, guid: 40f8a4339220e8341b710c3c2256e738, type: 3}
   - {fileID: 5685597515228401758, guid: 341ea5a60926ac044b4357d7862dbe83, type: 3}
-  - {fileID: 5685597515228401758, guid: 9ebd4fe02fa4df74ba2e879641abacfe, type: 3}
-  - {fileID: 5685597515228401758, guid: 60d9d792ab991aa4fa40618a621b2f69, type: 3}

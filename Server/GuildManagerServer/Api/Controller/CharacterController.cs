@@ -1,4 +1,4 @@
-using GuildManagerServer.Api.Dto;
+using GuildManagerServer.Api.Dto.CharacterDto;
 using GuildManagerServer.Api.Mapping;
 using GuildManagerServer.Api.Results;
 using GuildManagerServer.Api.Services;

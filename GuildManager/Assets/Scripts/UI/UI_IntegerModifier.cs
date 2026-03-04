@@ -11,8 +11,10 @@ public class UI_IntegerModifier : MonoBehaviour
     [SerializeField] private Vector2Int limits = new Vector2Int(0, 10);
     [SerializeField] private bool loop;
 
+    [SerializeField] private int startingValue = 0;
+
     [Header("Events")]
-    public UnityEvent<int> onValueChanged;
+    public UnityEvent<int> onValueChanged = new UnityEvent<int>();
 
     private int value = 0;
 
@@ -22,15 +24,11 @@ public class UI_IntegerModifier : MonoBehaviour
         {
             Debug.LogError($"Limits on {gameObject}'s {this} component are invalid.");
         }
+    }
 
-        if (valueText != null)
-        {
-            int.TryParse(valueText.GetParsedText(), out value);
-        }
-        else
-        {
-            SetValue(limits.x);
-        }
+    public void ResetValue()
+    {
+        SetValue(startingValue);
     }
 
     public void SetValue(int valueToSet)

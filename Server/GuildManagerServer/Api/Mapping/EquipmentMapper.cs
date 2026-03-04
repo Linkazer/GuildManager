@@ -1,3 +1,4 @@
+using GuildManagerServer.Api.Dto.EquipmentDto;
 using GuildManagerServer.Api.Models;
 using GuildManagerServer.Domain;
 
@@ -16,6 +17,16 @@ public static class EquipmentMapper
         {
             Id = model.Id,
             Name = model.Name
+        };
+    }
+
+    
+    public static DtoGetEquipment ToDtoGetEquipment(this Equipment equipment)
+    {
+        return new DtoGetEquipment
+        {
+            Id = equipment.Id,
+            Name = equipment.Name
         };
     }
 }

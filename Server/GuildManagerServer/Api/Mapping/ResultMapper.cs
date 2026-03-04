@@ -25,6 +25,7 @@ public static class ResultMapper
                 return controller.Ok(result.Data);
             case ResultCode.DataCreated:
                 //Must be done in the Controller directly.
+                break;
             case ResultCode.CharacterNotfound:
                 return controller.NotFound("Character not found.");
             case ResultCode.InvalidCharacterData:

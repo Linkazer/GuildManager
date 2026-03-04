@@ -8,5 +8,6 @@ namespace GuildManagerServer.Api.Repositories;
 /// </summary>
 public interface IEquipmentRepository
 {
+    public Task<List<EquipmentModel>> GetAllModelsAsync();
     public Task<EquipmentModel?> GetByIdAsync(int id);
 }

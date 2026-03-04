@@ -108,7 +108,14 @@ public class Character
             return Result<Character>.Failure(ResultCode.InvalidCharacterData, new KeyValuePair<string, string[]>("Id", new[] {"Id can't be lower than 1."}));
         }
 
-        return TryCreate(nName, nRace, nJob, nLevel, nStrength, nSpirit, nPresence, nDexterity, nInstinct, nBodyId, nHairId, nHairColorId, nEquipment);
+        Result<Character> createdCharacterResult = TryCreate(nName, nRace, nJob, nLevel, nStrength, nSpirit, nPresence, nDexterity, nInstinct, nBodyId, nHairId, nHairColorId, nEquipment);
+
+        if(createdCharacterResult.Succeed)
+        {
+            createdCharacterResult.Data.SetId(nId);
+        }
+
+        return createdCharacterResult;
     }
 
     public Result SetId(int nId)

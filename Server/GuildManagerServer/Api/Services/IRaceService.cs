@@ -1,3 +1,4 @@
+using GuildManagerServer.Api.Results;
 using GuildManagerServer.Domain;
 
 namespace GuildManagerServer.Api.Services;
@@ -8,5 +9,7 @@ namespace GuildManagerServer.Api.Services;
 /// </summary>
 public interface IRaceService
 {
+    public Task<Result<List<Race>>> GetAllAsync();
+
     public Task<Race?> GetByIdAsync(int id);
 }

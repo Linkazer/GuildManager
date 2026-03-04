@@ -1,24 +1,27 @@
-using Mono.Cecil;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Networking;
+using static System.Net.WebRequestMethods;
 
 namespace GuildManager
 {
     [Serializable]
-    public class ValidationProblemDetails
+    public class ApiErrorResponse
     {
-        public string type;
-        public string title;
-        public int status;
-        public Dictionary<string, string[]> errors;
+        public Dictionary<string, List<string>> Errors { get; set; }
+        public string Title { get; set; }
+        public int Status { get; set; }
     }
 
     public static class HttpRequests
     {
+        private const string URI = "http://localhost:5181/api/";
+
         public static async Task<Returned> Get<Returned>(string url) where Returned : class
         {
             UnityWebRequest getRequest = CreateRequest(url, RequestType.GET);
@@ -26,7 +29,7 @@ namespace GuildManager
 
             if (GetRequestResult(getRequest))
             {
-                return JsonUtility.FromJson<Returned>(getRequest.downloadHandler.text);
+                return JsonConvert.DeserializeObject<Returned>(getRequest.downloadHandler.text);
             }
             else
             {
@@ -41,7 +44,7 @@ namespace GuildManager
 
             if (GetRequestResult(postRequest))
             {
-                return JsonUtility.FromJson<Returned>(postRequest.downloadHandler.text);
+                return JsonConvert.DeserializeObject<Returned>(postRequest.downloadHandler.text);
             }
             else
             {
@@ -56,7 +59,7 @@ namespace GuildManager
 
             if (GetRequestResult(putRequest))
             {
-                return JsonUtility.FromJson<Returned>(putRequest.downloadHandler.text);
+                return JsonConvert.DeserializeObject<Returned>(putRequest.downloadHandler.text);
             }
             else
             {
@@ -64,7 +67,7 @@ namespace GuildManager
             }
         }
 
-        public static async Task<bool> Delete<T>(string url) where T : class
+        public static async Task<bool> Delete(string url)
         {
             UnityWebRequest deleteRequest = CreateRequest(url, RequestType.DELETE);
             await deleteRequest.SendWebRequest();
@@ -76,7 +79,7 @@ namespace GuildManager
         {
             string method = GetRequestMethod(type);
 
-            UnityWebRequest request = new UnityWebRequest(url, method);
+            UnityWebRequest request = new UnityWebRequest(URI + url, method);
 
             if (data != null)
             {
@@ -109,12 +112,20 @@ namespace GuildManager
 
         private static bool GetRequestResult(UnityWebRequest request)
         {
-            Debug.Log(request.responseCode);
-            Debug.Log(request.error);
+            if(request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(request.responseCode);
+                Debug.Log(request.error);
+            }
 
             if(request.responseCode == 400)
             {
-                Debug.Log(request.downloadHandler.text);
+                ApiErrorResponse error = JsonConvert.DeserializeObject<ApiErrorResponse>(request.downloadHandler.text);
+
+                foreach(KeyValuePair<string, List<string>> err in error.Errors)
+                {
+                    Debug.Log($"Error at {err.Key} : \"{err.Value[0]}\"");
+                }
             }
 
             //CODE REVIEW : Switch pour renvoyer les différents types d'erreurs ?

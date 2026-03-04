@@ -91,9 +91,9 @@ public class Result<T> : Result
     {
         if(Data == null)
         {
-            return new Result<TOut>{ ResultCode = this.ResultCode, ErrorMessage = this.ErrorMessage };
+            return new Result<TOut>{ Succeed = this.Succeed, ResultCode = this.ResultCode, ErrorMessage = this.ErrorMessage };
         }
 
-        return new Result<TOut>{ ResultCode = this.ResultCode, Data = mapper(this.Data) };
+        return new Result<TOut>{ Succeed = this.Succeed, ResultCode = this.ResultCode, Data = mapper(this.Data) };
     }
 }

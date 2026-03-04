@@ -8,5 +8,6 @@ namespace GuildManagerServer.Api.Repositories;
 /// </summary>
 public interface IJobRepository
 {
+    public Task<List<JobModel>> GetAllModelsAsync();
     public Task<JobModel?> GetByIdAsync(int id);
 }

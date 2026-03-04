@@ -25,8 +25,8 @@ public class GuildContext : DbContext
         //Create base data for Races. Note that we could also generate it manualy using SQL Server.
         modelBuilder.Entity<RaceModel>().HasData(
             new {Id = 1, Name = "Human", Strength = 0, Spirit = 0, Presence = 1, Dexterity = 0, Instinct = 1, Health = 10},
-            new {Id = 2, Name = "Elf", Strength = 0, Spirit = 1, Presence = 0, Dexterity = 1, Instinct = 0, Health = 10},
-            new {Id = 3, Name = "Tiefling", Strength = 0, Spirit = 1, Presence = 1, Dexterity = 0, Instinct = 0, Health = 10}
+            new {Id = 2, Name = "Elf", Strength = 0, Spirit = 1, Presence = 0, Dexterity = 1, Instinct = 0, Health = 7},
+            new {Id = 3, Name = "Tiefling", Strength = 0, Spirit = 1, Presence = 1, Dexterity = 0, Instinct = 0, Health = 8}
         );
 
         //Create base data for Jobs. Note that we could also generate it manualy using SQL Server.

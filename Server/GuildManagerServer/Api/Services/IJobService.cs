@@ -1,3 +1,4 @@
+using GuildManagerServer.Api.Results;
 using GuildManagerServer.Domain;
 
 namespace GuildManagerServer.Api.Services;
@@ -8,5 +9,6 @@ namespace GuildManagerServer.Api.Services;
 /// </summary>
 public interface IJobService
 {
+    public Task<Result<List<Job>>> GetAllAsync();
     public Task<Job?> GetByIdAsync(int id);
 }

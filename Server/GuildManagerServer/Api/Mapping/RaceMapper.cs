@@ -1,3 +1,4 @@
+using GuildManagerServer.Api.Dto.RaceDto;
 using GuildManagerServer.Api.Models;
 using GuildManagerServer.Domain;
 
@@ -24,6 +25,15 @@ public static class RaceMapper
             Instinct = model.Instinct,
 
             Health = model.Health
+        };
+    }
+    
+    public static DtoGetRace ToDtoGetRace(this Race race)
+    {
+        return new DtoGetRace
+        {
+            Id = race.Id,
+            Name = race.Name
         };
     }
 }

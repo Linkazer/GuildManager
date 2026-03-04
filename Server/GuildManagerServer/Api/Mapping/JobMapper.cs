@@ -1,3 +1,4 @@
+using GuildManagerServer.Api.Dto.JobDto;
 using GuildManagerServer.Api.Models;
 using GuildManagerServer.Domain;
 
@@ -24,6 +25,15 @@ public static class JobMapper
             Instinct = model.Instinct,
 
             HealthByLevel = model.HealthByLevel
+        };
+    }
+
+    public static DtoGetJob ToDtoGetJob(this Job job)
+    {
+        return new DtoGetJob
+        {
+            Id = job.Id,
+            Name = job.Name
         };
     }
 }

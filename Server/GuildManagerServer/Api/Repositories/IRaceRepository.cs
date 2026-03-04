@@ -8,5 +8,6 @@ namespace GuildManagerServer.Api.Repositories;
 /// </summary>
 public interface IRaceRepository
 {
+    public Task<List<RaceModel>> GetAllModelsAsync();
     public Task<RaceModel?> GetByIdAsync(int id);
 }

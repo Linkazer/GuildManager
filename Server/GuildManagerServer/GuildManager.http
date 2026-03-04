@@ -1,6 +1,9 @@
 GET http://localhost:5181/api/Character
 
 ###
+GET http://localhost:5181/api/Race
+
+###
 GET http://localhost:5181/api/Character/2
 
 ###
@@ -8,19 +11,19 @@ POST http://localhost:5181/api/Character
 Content-Type: application/json
 
 {
-  "Name": "Nor",
-  "RaceId": 3,
+  "Name": "Eliza",
+  "RaceId": 2,
   "JobId": 3,
   "Level": 1,
-  "Strength": 0,
+  "Strength": -1,
   "Spirit": 2,
-  "Presence": -1,
+  "Presence": 1,
   "Dexterity": 0,
-  "Instinct": 1,
+  "Instinct": 0,
   "BodyId": 1,
-  "HairId": 3,
-  "HairColorId": 4,
-  "EquipmentId": 2
+  "HairId": 4,
+  "HairColorId": 3,
+  "EquipmentId": 1
 }
 
 ###
