@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Equipment_Cloth
   m_EditorClassIdentifier: Assembly-CSharp::CharacterCustomEquipment
   equipmentId: 1
-  bodyPrefabs:
-  - {fileID: 6948799726150704104, guid: 838c3e8deae4c7d4ca2e373a5da05832, type: 3}
-  - {fileID: 6948799726150704104, guid: 1450c381373645b4381ffda174b5b6e7, type: 3}
+  bodySprite:
+  - {fileID: 21300000, guid: 7c59df545aa5ec54da6b275c2aab7ab4, type: 3}
+  - {fileID: 21300000, guid: 9dab0ad278c105347b2cb3e04fb87411, type: 3}

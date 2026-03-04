@@ -5,12 +5,12 @@ public class CharacterCustomBody : ScriptableObject
 {
     [SerializeField] private int raceId;
 
-    [SerializeField] private GameObject[] bodyPrefabs;
+    [SerializeField] private Sprite[] bodySprite;
 
     public int RaceId => raceId;
 
-    public GameObject GetBody(int id)
+    public Sprite GetBody(int id)
     {
-        return bodyPrefabs[id];
+        return bodySprite[id];
     }
 }

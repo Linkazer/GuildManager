@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Hairstyle_4
   m_EditorClassIdentifier: Assembly-CSharp::CharacterCustomHair
   hairId: 4
-  hairPrefabs:
-  - {fileID: 2333922328472892308, guid: f92d75418c9659649b736d899d083f87, type: 3}
-  - {fileID: 2333922328472892308, guid: f1d54901c6239524f82c06c220d69164, type: 3}
-  - {fileID: 2333922328472892308, guid: 8b0da3096b7425d46a234bc5bafb1e2a, type: 3}
-  - {fileID: 2333922328472892308, guid: c58def838f328c74fbe113fa5b90b11a, type: 3}
+  hairSprite:
+  - {fileID: 8228543095853500350, guid: 1e88a8734791a43448853e96b40e0f6c, type: 3}
+  - {fileID: -403508798227041534, guid: 1e88a8734791a43448853e96b40e0f6c, type: 3}
+  - {fileID: -405814153119682603, guid: 1e88a8734791a43448853e96b40e0f6c, type: 3}
+  - {fileID: 4829013290654057607, guid: 1e88a8734791a43448853e96b40e0f6c, type: 3}

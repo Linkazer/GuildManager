@@ -9,11 +9,11 @@ public class UI_CharacterSelectorButton : MonoBehaviour
 
     private UI_CharacterSelector selector;
 
-    public void Set(UI_CharacterSelector nSelector, CharacterData data)
+    public void Set(UI_CharacterSelector nSelector, int id, string name)
     {
         selector = nSelector;
-        characterId = data.Id;
-        buttonText.text = data.Name;
+        characterId = id;
+        buttonText.text = name;
     }
 
     public void UE_SelectCharacter()

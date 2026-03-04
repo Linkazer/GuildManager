@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Equipment_Halfplate
   m_EditorClassIdentifier: Assembly-CSharp::CharacterCustomEquipment
   equipmentId: 3
-  bodyPrefabs:
-  - {fileID: 6948799726150704104, guid: 07594109868856747a864bf3dfe63edc, type: 3}
-  - {fileID: 6948799726150704104, guid: 3896d9244849e2543b758691b959476e, type: 3}
+  bodySprite:
+  - {fileID: 21300000, guid: 87920c4553882884d98d9226f6529ee3, type: 3}
+  - {fileID: 21300000, guid: 20a8e67bbd5a14541922cf8cf9cd1486, type: 3}

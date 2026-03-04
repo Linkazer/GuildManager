@@ -24,7 +24,7 @@ public class UI_CharacterDetail : UI_Menu
     [SerializeField] private TextMeshProUGUI willHolder;
 
     private int characterId;
-    private CharacterData loadedCharacter;
+    private CharacterDtoGetDetails loadedCharacter;
 
     public void SetCharacterId(int nCharacterId)
     {
@@ -47,7 +47,7 @@ public class UI_CharacterDetail : UI_Menu
     {
         handler.DisplayLoading();
 
-        loadedCharacter = await CharacterService.GetCharacterById(characterId);
+        loadedCharacter = await CharacterService.GetCharacterDetailsById(characterId);
 
         if (loadedCharacter != null)
         {
@@ -67,7 +67,7 @@ public class UI_CharacterDetail : UI_Menu
         
     }
 
-    private void DisplayDetails(CharacterData characterData)
+    private void DisplayDetails(CharacterDtoGetDetails characterData)
     {
         nameHolder.text = characterData.Name;
 
@@ -111,7 +111,7 @@ public class UI_CharacterDetail : UI_Menu
 
     private void OpenModifier()
     {
-        characterModifier.SetExistingCharacter(loadedCharacter);
+        characterModifier.SetExistingCharacterId(loadedCharacter.Id);
         handler.OpenMenu(characterModifier);
     }
 

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Body_Elf
   m_EditorClassIdentifier: Assembly-CSharp::CharacterCustomBody
   raceId: 2
-  bodyPrefabs:
-  - {fileID: 5685597515228401758, guid: 40f8a4339220e8341b710c3c2256e738, type: 3}
-  - {fileID: 5685597515228401758, guid: 341ea5a60926ac044b4357d7862dbe83, type: 3}
+  bodySprite:
+  - {fileID: 21300000, guid: cbf8f301013cb0945b5756175ea9631e, type: 3}
+  - {fileID: 21300000, guid: 15082d67f588577458365e9213e38094, type: 3}

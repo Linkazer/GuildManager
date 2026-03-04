@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Body_Tiefling
   m_EditorClassIdentifier: Assembly-CSharp::CharacterCustomBody
   raceId: 3
-  bodyPrefabs:
-  - {fileID: 5685597515228401758, guid: ff0fa8164843a0247a1abbe6356fbfdd, type: 3}
-  - {fileID: 5685597515228401758, guid: 406d3f7dc02079549a6c6764ff3509ba, type: 3}
+  bodySprite:
+  - {fileID: 21300000, guid: 92505371d2990d140b27bcf9242267cb, type: 3}
+  - {fileID: 21300000, guid: 325430d5532e93941aaddfb00ea15042, type: 3}

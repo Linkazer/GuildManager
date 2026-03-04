@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5b82eb77e0f4db4c88ee00a3ddbff94, type: 3}
+  m_Name: Hairstyle_6
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCustomHair
+  hairId: 4
+  hairSprite:
+  - {fileID: -6974067626371761879, guid: 1e88a8734791a43448853e96b40e0f6c, type: 3}
+  - {fileID: -4005621902275857250, guid: 1e88a8734791a43448853e96b40e0f6c, type: 3}
+  - {fileID: 3428386541998636237, guid: 1e88a8734791a43448853e96b40e0f6c, type: 3}
+  - {fileID: 3105721221840557095, guid: 1e88a8734791a43448853e96b40e0f6c, type: 3}

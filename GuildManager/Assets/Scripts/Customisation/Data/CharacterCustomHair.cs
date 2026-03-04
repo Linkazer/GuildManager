@@ -5,12 +5,12 @@ public class CharacterCustomHair : ScriptableObject
 {
     [SerializeField] private int hairId;
 
-    [SerializeField] private GameObject[] hairPrefabs;
+    [SerializeField] private Sprite[] hairSprite;
 
     public int HairId => hairId;
 
-    public GameObject GetHair(int colorId)
+    public Sprite GetHair(int colorId)
     {
-        return hairPrefabs[colorId];
+        return hairSprite[colorId];
     }
 }

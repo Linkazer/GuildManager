@@ -2,7 +2,7 @@ using NUnit.Framework.Internal;
 
 public static class CharacterMapper
 {
-    public static CharacterData ToData(this DtoGetCharacter getResult)
+    public static CharacterData ToData(this CharacterDtoGetDetails getResult)
     {
         return new CharacterData
         {
@@ -29,9 +29,32 @@ public static class CharacterMapper
         };
     }
 
-    public static DtoPostCharacter ToPost(this CharacterData character)
+    public static CharacterData ToData(this CharacterDtoGetBase dto)
     {
-        return new DtoPostCharacter
+        return new CharacterData
+        {
+            Id = dto.Id,
+            Name = dto.Name,
+            RaceId = dto.RaceId,
+            JobId = dto.JobId,
+            Level = dto.Level,
+
+            Strength = dto.Strength,
+            Spirit = dto.Spirit,
+            Presence = dto.Presence,
+            Dexterity = dto.Dexterity,
+            Instinct = dto.Instinct,
+
+            BodyId = dto.BodyId,
+            HairId = dto.HairId,
+            HairColorId = dto.HairColorId,
+            EquipmentId = dto.EquipmentId
+        };
+    }
+
+    public static CharacterDtoPost ToPost(this CharacterData character)
+    {
+        return new CharacterDtoPost
         {
             Name = character.Name,
             RaceId = character.RaceId,
@@ -51,9 +74,9 @@ public static class CharacterMapper
         };
     }
 
-    public static DtoPutCharacter ToPut(this CharacterData character)
+    public static CharacterDtoPut ToPut(this CharacterData character)
     {
-        return new DtoPutCharacter
+        return new CharacterDtoPut
         {
             Name = character.Name,
             RaceId = character.RaceId,
@@ -72,4 +95,20 @@ public static class CharacterMapper
             EquipmentId = character.EquipmentId
         };
     }
+
+    public static CharacterDtoGetResume ToResume(this CharacterData character)
+    {
+        return new CharacterDtoGetResume
+        {
+            Id = character.Id,
+            Name = character.Name,
+            RaceId = character.RaceId,
+            JobId = character.JobId,
+            BodyId = character.BodyId,
+            HairId = character.HairId,
+            HairColorId = character.HairColorId,
+            EquipmentId = character.EquipmentId
+        };
+    }
+
 }

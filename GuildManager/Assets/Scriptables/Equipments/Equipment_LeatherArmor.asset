@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Equipment_LeatherArmor
   m_EditorClassIdentifier: Assembly-CSharp::CharacterCustomEquipment
   equipmentId: 2
-  bodyPrefabs:
-  - {fileID: 6948799726150704104, guid: 30575f7971856fb45802e364863089ee, type: 3}
-  - {fileID: 6948799726150704104, guid: a32decde90a3365449312d74df11f94b, type: 3}
+  bodySprite:
+  - {fileID: 21300000, guid: 1af2135981b82db42ba9d434838178b7, type: 3}
+  - {fileID: 21300000, guid: 45d8a3c995926354e9ab81a1fe6234a4, type: 3}

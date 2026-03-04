@@ -29,14 +29,16 @@ public class UI_CharacterSelector : UI_Menu
 
         CleanButtons();
 
-        List<CharacterData> retrivedData = await CharacterService.GetAllCharacters();
+        List<CharacterDtoGetResume> retrivedData = await CharacterService.GetAllCharactersResumes();
 
-        foreach (CharacterData data in retrivedData)
+        foreach (CharacterDtoGetResume data in retrivedData)
         {
             UI_CharacterSelectorButton buttonToAdd = Instantiate(buttonPrefab, buttonHolder);
-            buttonToAdd.Set(this, data);
+            buttonToAdd.Set(this, data.Id, data.Name);
             loadedButtons.Add(buttonToAdd);
         }
+
+        CharacterDisplayHandler.Instance.ReloadAll(retrivedData);
 
         handler.HideLoading();
     }
@@ -58,7 +60,7 @@ public class UI_CharacterSelector : UI_Menu
 
     private void CreateCharacter()
     {
-        modifierMenu.SetExistingCharacter(null);
+        modifierMenu.SetExistingCharacterId(-1);
         handler.OpenMenu(modifierMenu);
     }
 

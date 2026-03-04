@@ -26,13 +26,27 @@ public class CharacterController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAllResume()
     {
         Result<List<Character>> result = await service.GetAllAsync();
 
-        Result<List<DtoGetCharacter>> mappedResult = result.MapData(list => list.Select(c => c.ToDtoGetCharacter()).ToList());
+        Result<List<CharacterDtoGetResume>> mappedResult = result.MapData(list => list.Select(c => c.ToDtoGetResume()).ToList());
 
         return this.GetResult(mappedResult);
+    }
+    /// <summary>
+    /// Request to get a Character from the Database.
+    /// </summary>
+    /// <param name="id">The id of the Character wanted.</param>
+    /// <returns></returns>
+    [HttpGet("resume/{id:int}")]
+    public async Task<IActionResult> GetResumeById([FromRoute] int id)
+    {
+        Result<Character> result = await service.GetByIdAsync(id);
+
+        Result<CharacterDtoGetResume> dtoResult = result.MapData(c => c.ToDtoGetResume());
+
+        return this.GetResult(dtoResult);
     }
 
     /// <summary>
@@ -40,12 +54,27 @@ public class CharacterController : ControllerBase
     /// </summary>
     /// <param name="id">The id of the Character wanted.</param>
     /// <returns></returns>
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetById([FromRoute] int id)
+    [HttpGet("details/{id:int}")]
+    public async Task<IActionResult> GetDetailsById([FromRoute] int id)
     {
         Result<Character> result = await service.GetByIdAsync(id);
 
-        Result<DtoGetCharacter> dtoResult = result.MapData(c => c.ToDtoGetCharacter());
+        Result<CharacterDtoGetDetails> dtoResult = result.MapData(c => c.ToDtoGetDetails());
+
+        return this.GetResult(dtoResult);
+    }
+
+    /// <summary>
+    /// Request to get a Character from the Database.
+    /// </summary>
+    /// <param name="id">The id of the Character wanted.</param>
+    /// <returns></returns>
+    [HttpGet("base/{id:int}")]
+    public async Task<IActionResult> GetBaseById([FromRoute] int id)
+    {
+        Result<Character> result = await service.GetByIdAsync(id);
+
+        Result<CharacterDtoGetBase> dtoResult = result.MapData(c => c.ToDtoGetBase());
 
         return this.GetResult(dtoResult);
     }
@@ -56,16 +85,16 @@ public class CharacterController : ControllerBase
     /// <param name="characterToCreate">The data of the Character to create.</param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<IActionResult> CreateCharacter([FromBody] DtoPostCharacter characterToCreate)
+    public async Task<IActionResult> CreateCharacter([FromBody] CharacterDtoPost characterToCreate)
     {
         Result<Character> result = await service.CreateCharacterAsync(characterToCreate.ToCommand());
 
         if(result.ResultCode == ResultCode.DataCreated && result.Data != null)
         {
-            return CreatedAtAction(nameof(GetById), new { id = result.Data.Id }, result.Data.ToDtoGetCharacter());
+            return CreatedAtAction(nameof(GetDetailsById), new { id = result.Data.Id }, result.Data.ToDtoGetDetails());
         }
 
-        Result<DtoGetCharacter> dtoResult = result.MapData(c => c.ToDtoGetCharacter());
+        Result<CharacterDtoGetDetails> dtoResult = result.MapData(c => c.ToDtoGetDetails());
 
         return this.GetResult(dtoResult);
     }
@@ -77,11 +106,11 @@ public class CharacterController : ControllerBase
     /// <param name="updateDto">The updated Character's data.</param>
     /// <returns></returns>
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateCharacter([FromRoute] int id, [FromBody] DtoPutCharacter updateDto)
+    public async Task<IActionResult> UpdateCharacter([FromRoute] int id, [FromBody] CharacterDtoPut updateDto)
     {
         Result<Character> result = await service.UpdateCharacterAsync(id, updateDto.ToCommand());
 
-        Result<DtoGetCharacter> dtoResult = result.MapData(c => c.ToDtoGetCharacter());
+        Result<CharacterDtoGetDetails> dtoResult = result.MapData(c => c.ToDtoGetDetails());
 
         return this.GetResult(dtoResult);
     }
@@ -96,7 +125,7 @@ public class CharacterController : ControllerBase
     {
         Result<Character> result = await service.DeleteCharacterAsync(id);
 
-        Result<DtoGetCharacter> dtoResult = result.MapData(c => c.ToDtoGetCharacter());
+        Result<CharacterDtoGetDetails> dtoResult = result.MapData(c => c.ToDtoGetDetails());
 
         return this.GetResult(dtoResult);
     }

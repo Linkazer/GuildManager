@@ -22,7 +22,7 @@ public class CustomisationManager : MonoBehaviour
         }
     }
 
-    public GameObject GetBody(int raceId, int bodyId)
+    public Sprite GetBody(int raceId, int bodyId)
     {
         if(raceId-1 < raceBodies.Length)
         {
@@ -32,7 +32,7 @@ public class CustomisationManager : MonoBehaviour
         return null;
     }
 
-    public GameObject GetEquipment(int equipmentId, int bodyId)
+    public Sprite GetEquipment(int equipmentId, int bodyId)
     {
         if (equipmentId-1 < equipments.Length)
         {
@@ -42,7 +42,7 @@ public class CustomisationManager : MonoBehaviour
         return null;
     }
 
-    public GameObject GetHair(int hairId, int hairColorId)
+    public Sprite GetHair(int hairId, int hairColorId)
     {
         if (hairId-1 < hairs.Length)
         {

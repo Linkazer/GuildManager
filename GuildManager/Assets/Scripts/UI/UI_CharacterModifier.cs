@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class UI_CharacterModifier : UI_Menu
 {
     [Header("Linked menus")]
     [SerializeField] private UI_CharacterSelector characterSelector;
+
+    [Header("Previsualisation")]
+    [SerializeField] private CharacterDisplay previsualiser;
 
     [Header("UI Elements")]
     [SerializeField] private TMP_InputField nameField;
@@ -26,12 +30,12 @@ public class UI_CharacterModifier : UI_Menu
     [SerializeField] private UI_IntegerModifier hairstyleModifier;
     [SerializeField] private UI_IntegerModifier hairColorModifier;
 
-    private CharacterData existingCharacter = null;
+    private int existingCharacterId = -1;
     [SerializeField] private CharacterData modifiedCharacter;
 
-    public void SetExistingCharacter(CharacterData nExistingCharacter)
+    public void SetExistingCharacterId(int nId)
     {
-        existingCharacter = nExistingCharacter;
+        existingCharacterId = nId;
     }
 
     protected override void OnOpenMenu()
@@ -46,18 +50,31 @@ public class UI_CharacterModifier : UI_Menu
         List<JobData> jobs = ReferenceDataService.JobData.GetAll();
         jobDropdown.AddOptions(jobs.Select(j => j.Name).ToList());
 
-        //Equiment limits
+        LoadMenu();
+    }
 
+    private async void LoadMenu()
+    {
         modifiedCharacter = new CharacterData();
+
+        CharacterDtoGetBase existingCharacter = null;
+
+        if (existingCharacterId > 0)
+        {
+            existingCharacter = await CharacterService.GetCharacterBaseById(existingCharacterId);
+        }
 
         if (existingCharacter != null)
         {
+            modifiedCharacter = existingCharacter.ToData();
             SetValues(existingCharacter);
         }
         else
         {
             ResetValues();
         }
+
+        OnCustomisationChanged();
     }
 
     private void ResetValues()
@@ -78,8 +95,10 @@ public class UI_CharacterModifier : UI_Menu
         //jobDropdown.value = 0;
     }
 
-    private void SetValues(CharacterData dataToUse)
+    private void SetValues(CharacterDtoGetBase dataToUse)
     {
+        nameField.text = dataToUse.Name;
+
         levelModifier.SetValue(dataToUse.Level);
         strengthModifier.SetValue(dataToUse.Strength);
         spiritModifier.SetValue(dataToUse.Spirit);
@@ -92,23 +111,23 @@ public class UI_CharacterModifier : UI_Menu
         hairstyleModifier.SetValue(dataToUse.HairId);
         hairColorModifier.SetValue(dataToUse.HairColorId);
 
-        //raceDropdown.value = dataToUse.RaceId - 1;
-        //jobDropdown.value = dataToUse.JobId - 1;
+        raceDropdown.value = dataToUse.RaceId - 1;
+        jobDropdown.value = dataToUse.JobId - 1;
     }
 
     protected override void OnCloseMenu()
     {
         modifiedCharacter = new CharacterData();
-        existingCharacter = null;
+        existingCharacterId = -1;
     }
 
     public async void TryValidateCharacter()
     {
         handler.DisplayLoading();
 
-        if (existingCharacter != null)
+        if (existingCharacterId > 0)
         {
-            await CharacterService.PutCharacter(existingCharacter.Id, modifiedCharacter);
+            await CharacterService.PutCharacter(existingCharacterId, modifiedCharacter);
         }
         else
         {
@@ -120,10 +139,14 @@ public class UI_CharacterModifier : UI_Menu
         CloseModifier();
     }
 
+    private void OnCustomisationChanged()
+    {
+        previsualiser.SetCharacter(modifiedCharacter.ToResume());
+    }
 
     private void CloseModifier()
     {
-        existingCharacter = null;
+        existingCharacterId = -1;
         handler.OpenMenu(characterSelector);
     }
 
@@ -146,6 +169,7 @@ public class UI_CharacterModifier : UI_Menu
     public void UE_UpdateRace(int value)
     {
         modifiedCharacter.RaceId = value+1;
+        OnCustomisationChanged();
     }
 
     public void UE_UpdateJob(int value)
@@ -186,21 +210,25 @@ public class UI_CharacterModifier : UI_Menu
     public void UE_UpdateEquipment(int value)
     {
         modifiedCharacter.EquipmentId = value;
+        OnCustomisationChanged();
     }
 
     public void UE_UpdateBody(int value)
     {
         modifiedCharacter.BodyId = value;
+        OnCustomisationChanged();
     }
 
     public void UE_UpdateHairstyle(int value)
     {
         modifiedCharacter.HairId = value;
+        OnCustomisationChanged();
     }
 
     public void UE_UpdateHairColor(int value)
     {
         modifiedCharacter.HairColorId = value;
+        OnCustomisationChanged();
     }
     #endregion
 }

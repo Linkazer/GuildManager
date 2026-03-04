@@ -52,9 +52,9 @@ public static class CharacterMapper
     /// </summary>
     /// <param name="character">The Character to map.</param>
     /// <returns></returns>
-    public static DtoGetCharacter ToDtoGetCharacter(this Character character)
+    public static CharacterDtoGetDetails ToDtoGetDetails(this Character character)
     {
-        return new DtoGetCharacter
+        return new CharacterDtoGetDetails
         {
             Id = character.Id,
             Name = character.Name,
@@ -78,10 +78,49 @@ public static class CharacterMapper
             Will = character.Will
         };
     }
+
+    public static CharacterDtoGetResume ToDtoGetResume(this Character character)
+    {
+        return new CharacterDtoGetResume
+        {
+            Id = character.Id,
+            Name = character.Name,
+            RaceId = character.Race.Id,
+            JobId = character.Job.Id,
+
+            BodyId = character.BodyId,
+            HairId = character.HairId,
+            HairColorId = character.HairColorId,
+            EquipmentId = character.Equipment.Id,
+        };
+    }
+
+    public static CharacterDtoGetBase ToDtoGetBase(this Character character)
+    {
+        return new CharacterDtoGetBase
+        {
+            Id = character.Id,
+            Name = character.Name,
+            RaceId = character.Race.Id,
+            JobId = character.Job.Id,
+            Level = character.Level,
+
+            Strength = character.Strength,
+            Spirit = character.Spirit,
+            Presence = character.Presence,
+            Dexterity = character.Dexterity,
+            Instinct = character.Instinct,
+
+            BodyId = character.BodyId,
+            HairId = character.HairId,
+            HairColorId = character.HairColorId,
+            EquipmentId = character.Equipment.Id,
+        };
+    }
     #endregion
 
     #region Command
-    public static CreateCharacterCommand ToCommand(this DtoPostCharacter postCharacter)
+    public static CreateCharacterCommand ToCommand(this CharacterDtoPost postCharacter)
     {
         return new CreateCharacterCommand(
             postCharacter.Name,
@@ -100,7 +139,7 @@ public static class CharacterMapper
         );
     }
 
-    public static UpdateCharacterCommand ToCommand(this DtoPutCharacter putCharacter)
+    public static UpdateCharacterCommand ToCommand(this CharacterDtoPut putCharacter)
     {
         return new UpdateCharacterCommand(
             putCharacter.Name,
