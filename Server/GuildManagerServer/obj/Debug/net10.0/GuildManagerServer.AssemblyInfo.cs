@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GuildManagerServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f2d16da26335fe1aaf2b3c0e1b320d7d278ed65e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ebfdbcf70dc7e62ee28c6847484cd76ce98b305")]
 [assembly: System.Reflection.AssemblyProductAttribute("GuildManagerServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GuildManagerServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
