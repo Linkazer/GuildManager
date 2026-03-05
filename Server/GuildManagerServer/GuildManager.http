@@ -10,7 +10,7 @@ GET http://localhost:5181/api/Job
 GET http://localhost:5181/api/Equipment
 
 ###
-GET http://localhost:5181/api/Character/Raw/1
+GET http://localhost:5181/api/Character/Resume/7
 
 ###
 POST http://localhost:5181/api/Character
@@ -33,7 +33,7 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:5181/api/Character/1
+PUT http://localhost:5181/api/Character/7
 Content-Type: application/json
 
 {
@@ -53,4 +53,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:5181/api/Character/1
+DELETE http://localhost:5181/api/Character/7
