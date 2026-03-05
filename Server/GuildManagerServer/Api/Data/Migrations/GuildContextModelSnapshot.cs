@@ -16,7 +16,7 @@ namespace GuildManagerServer.Api.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
 
-            modelBuilder.Entity("GuildManagerServer.Api.Models.Character", b =>
+            modelBuilder.Entity("GuildManagerServer.Api.Models.CharacterModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +73,7 @@ namespace GuildManagerServer.Api.Data.Migrations
                     b.ToTable("Character");
                 });
 
-            modelBuilder.Entity("GuildManagerServer.Api.Models.Equipment", b =>
+            modelBuilder.Entity("GuildManagerServer.Api.Models.EquipmentModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,9 +86,31 @@ namespace GuildManagerServer.Api.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Equipment");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Clothe"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Leather armor"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Chain mail"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Plate armor"
+                        });
                 });
 
-            modelBuilder.Entity("GuildManagerServer.Api.Models.Job", b =>
+            modelBuilder.Entity("GuildManagerServer.Api.Models.JobModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -119,9 +141,44 @@ namespace GuildManagerServer.Api.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Job");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Dexterity = 0,
+                            HealthByLevel = 3,
+                            Instinct = 0,
+                            Name = "Fighter",
+                            Presence = 0,
+                            Spirit = 0,
+                            Strength = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Dexterity = 0,
+                            HealthByLevel = 2,
+                            Instinct = 0,
+                            Name = "Bard",
+                            Presence = 1,
+                            Spirit = 0,
+                            Strength = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Dexterity = 0,
+                            HealthByLevel = 1,
+                            Instinct = 0,
+                            Name = "Mage",
+                            Presence = 0,
+                            Spirit = 1,
+                            Strength = 0
+                        });
                 });
 
-            modelBuilder.Entity("GuildManagerServer.Api.Models.Race", b =>
+            modelBuilder.Entity("GuildManagerServer.Api.Models.RaceModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -152,23 +209,58 @@ namespace GuildManagerServer.Api.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Race");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Dexterity = 0,
+                            Health = 10,
+                            Instinct = 1,
+                            Name = "Human",
+                            Presence = 1,
+                            Spirit = 0,
+                            Strength = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Dexterity = 1,
+                            Health = 10,
+                            Instinct = 0,
+                            Name = "Elf",
+                            Presence = 0,
+                            Spirit = 1,
+                            Strength = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Dexterity = 0,
+                            Health = 10,
+                            Instinct = 0,
+                            Name = "Tiefling",
+                            Presence = 1,
+                            Spirit = 1,
+                            Strength = 0
+                        });
                 });
 
-            modelBuilder.Entity("GuildManagerServer.Api.Models.Character", b =>
+            modelBuilder.Entity("GuildManagerServer.Api.Models.CharacterModel", b =>
                 {
-                    b.HasOne("GuildManagerServer.Api.Models.Equipment", "Equipment")
+                    b.HasOne("GuildManagerServer.Api.Models.EquipmentModel", "Equipment")
                         .WithMany()
                         .HasForeignKey("EquipmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GuildManagerServer.Api.Models.Job", "Job")
+                    b.HasOne("GuildManagerServer.Api.Models.JobModel", "Job")
                         .WithMany()
                         .HasForeignKey("JobId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GuildManagerServer.Api.Models.Race", "Race")
+                    b.HasOne("GuildManagerServer.Api.Models.RaceModel", "Race")
                         .WithMany()
                         .HasForeignKey("RaceId")
                         .OnDelete(DeleteBehavior.Cascade)

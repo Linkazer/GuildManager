@@ -1,0 +1,56 @@
+GET http://localhost:5181/api/Character
+
+###
+GET http://localhost:5181/api/Race
+
+###
+GET http://localhost:5181/api/Job
+
+###
+GET http://localhost:5181/api/Equipment
+
+###
+GET http://localhost:5181/api/Character/Resume/7
+
+###
+POST http://localhost:5181/api/Character
+Content-Type: application/json
+
+{
+  "Name": "Eliza",
+  "RaceId": 2,
+  "JobId": 3,
+  "Level": 1,
+  "Strength": -1,
+  "Spirit": 2,
+  "Presence": 1,
+  "Dexterity": 0,
+  "Instinct": 0,
+  "BodyId": 1,
+  "HairId": 4,
+  "HairColorId": 3,
+  "EquipmentId": 1
+}
+
+###
+PUT http://localhost:5181/api/Character/7
+Content-Type: application/json
+
+{
+  "Name": "Thomas",
+  "RaceId": 1,
+  "JobId": 1,
+  "Level": 1,
+  "Strength": 2,
+  "Spirit": 0,
+  "Presence": -1,
+  "Dexterity": 1,
+  "Instinct": 0,
+  "BodyId": 3,
+  "HairId": 2,
+  "HairColorId": 5,
+  "EquipmentId": 1
+}
+
+###
+DELETE http://localhost:5181/api/Character/7

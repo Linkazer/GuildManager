@@ -7,15 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Api\Controller\" />
     <Folder Include="Api\Data\" />
     <Folder Include="Api\Data\Migrations\" />
-    <Folder Include="Api\Models\" />
+    <Folder Include="Api\Dto\EquipmentDto\" />
+    <Folder Include="Api\Dto\JobDto\" />
+    <Folder Include="Api\Dto\RaceDto\" />
+    <Folder Include="Api\Repositories\" />
+    <Folder Include="Api\Services\" />
     <Folder Include="Databases\" />
   </ItemGroup>
 
