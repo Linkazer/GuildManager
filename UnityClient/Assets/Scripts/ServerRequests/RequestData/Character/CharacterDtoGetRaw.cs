@@ -5,7 +5,7 @@ using System;
 /// Contains all the raw data of a Character (before adding race's stats, job's stat, ...).
 /// </summary>
 [Serializable]
-public class CharacterDtoGetBase
+public class CharacterDtoGetRaw
 {
     public int Id;
     public string Name;

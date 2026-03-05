@@ -10,7 +10,7 @@ public static class CharacterService
     private const string RequestCharacterUrl = "Character";
     private const string RequestResumeUrl = "Resume";
     private const string RequestDetailsUrl = "Details";
-    private const string RequestBaseUrl = "Base";
+    private const string RequestRawUrl = "Raw";
 
     /// <summary>
     /// Get all Character as a Resume DTO.
@@ -52,9 +52,9 @@ public static class CharacterService
     /// </summary>
     /// <param name="id">The Id of the Character to get.</param>
     /// <returns></returns>
-    public static async Task<CharacterDtoGetBase> GetCharacterBaseById(int id)
+    public static async Task<CharacterDtoGetRaw> GetCharacterRawById(int id)
     {
-        CharacterDtoGetBase getData = await HttpRequests.Get<CharacterDtoGetBase>($"{RequestCharacterUrl}/{RequestBaseUrl}/{id}");
+        CharacterDtoGetRaw getData = await HttpRequests.Get<CharacterDtoGetRaw>($"{RequestCharacterUrl}/{RequestRawUrl}/{id}");
 
         return getData;
     }
