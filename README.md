@@ -59,7 +59,7 @@ Model (Persistence)
 
 ### API
 
-git clone https://github.com/username/guildmanager.git
+git clone https://github.com/Linkazer/GuildManager.git
 
 cd GuildManager/Server/GuildManagerServer
 
@@ -77,11 +77,13 @@ http://localhost:5181
 
 ### Application Unity
 
-Ouvrir le dossier `UnityClient` avec Unity Hub.
+#### Avec l'éxécutable
 
-## Aperçu
+Lancer l'éxécutable dans le dossier 'UnityClient\Build'.
 
-![Screenshot](docs/screenshot.png)
+#### Avec Unity Editor
+
+Ouvrir le dossier 'UnityClient' avec Unity Hub.
 
 ## Objectif
 
@@ -173,5 +175,4 @@ DELETE http://localhost:5181/api/Character/1
 Nom Prénom  
 Développeur C# d'applications interactives en transition vers .NET
 
-LinkedIn : https://linkedin.com/in/username  
-Portfolio : https://username.dev
+Portfolio : https://timothelafranche.wixsite.com/portfolio
