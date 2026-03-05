@@ -47,13 +47,7 @@ Architecture :
 
 Flux de données :
 
-DTO (Controller)
-   ↓
-Command (Service)
-   ↓
-Domain (Logique métier)
-   ↓
-Model (Persistence)
+DTO (Controller) -> Command (Service) -> Domain (Logique métier) -> Model (Persistence)
 
 ## Installation et lancement
 
