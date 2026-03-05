@@ -1,5 +1,8 @@
 namespace GuildManagerServer.Api.Results;
 
+/// <summary>
+/// Define a result of a Service operation. It should be later mapped to IActionResults.
+/// </summary>
 public class Result
 {
     public bool Succeed { get; protected set; }

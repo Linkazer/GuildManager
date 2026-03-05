@@ -1,7 +1,7 @@
 namespace GuildManagerServer.Api.Dto.CharacterDto;
 
 /// <summary>
-/// DTO use to get all informations of a Character.
+/// DTO used to get all data of a Character, with calculated values.
 /// </summary>
 public record class CharacterDtoGetDetails
 {

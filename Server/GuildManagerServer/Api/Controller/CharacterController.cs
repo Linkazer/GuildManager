@@ -22,7 +22,7 @@ public class CharacterController : ControllerBase
     }
 
     /// <summary>
-    /// Request to get all Characters from the Database.
+    /// Request to get all Characters from the Database as CharacterDtoGetResume.
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -34,12 +34,13 @@ public class CharacterController : ControllerBase
 
         return this.GetResult(mappedResult);
     }
+
     /// <summary>
-    /// Request to get a Character from the Database.
+    /// Request to get a Character from the Database as a CharacterDtoGetResume.
     /// </summary>
     /// <param name="id">The id of the Character wanted.</param>
     /// <returns></returns>
-    [HttpGet("resume/{id:int}")]
+    [HttpGet("Resume/{id:int}")]
     public async Task<IActionResult> GetResumeById([FromRoute] int id)
     {
         Result<Character> result = await service.GetByIdAsync(id);
@@ -50,11 +51,11 @@ public class CharacterController : ControllerBase
     }
 
     /// <summary>
-    /// Request to get a Character from the Database.
+    /// Request to get a Character from the Database as a CharacterDtoGetDetails.
     /// </summary>
     /// <param name="id">The id of the Character wanted.</param>
     /// <returns></returns>
-    [HttpGet("details/{id:int}")]
+    [HttpGet("Details/{id:int}")]
     public async Task<IActionResult> GetDetailsById([FromRoute] int id)
     {
         Result<Character> result = await service.GetByIdAsync(id);
@@ -65,16 +66,16 @@ public class CharacterController : ControllerBase
     }
 
     /// <summary>
-    /// Request to get a Character from the Database.
+    /// Request to get a Character from the Database as a CharacterDtoGetRaw.
     /// </summary>
     /// <param name="id">The id of the Character wanted.</param>
     /// <returns></returns>
-    [HttpGet("base/{id:int}")]
+    [HttpGet("Base/{id:int}")]
     public async Task<IActionResult> GetBaseById([FromRoute] int id)
     {
         Result<Character> result = await service.GetByIdAsync(id);
 
-        Result<CharacterDtoGetBase> dtoResult = result.MapData(c => c.ToDtoGetBase());
+        Result<CharacterDtoGetRaw> dtoResult = result.MapData(c => c.ToDtoGetRaw());
 
         return this.GetResult(dtoResult);
     }
@@ -83,7 +84,7 @@ public class CharacterController : ControllerBase
     /// Request to create a new Character in the Database.
     /// </summary>
     /// <param name="characterToCreate">The data of the Character to create.</param>
-    /// <returns></returns>
+    /// <returns>The CharacterDtoGetDetails version of the created Character.</returns>
     [HttpPost]
     public async Task<IActionResult> CreateCharacter([FromBody] CharacterDtoPost characterToCreate)
     {
@@ -104,7 +105,7 @@ public class CharacterController : ControllerBase
     /// </summary>
     /// <param name="id">The id of the Character to update.</param>
     /// <param name="updateDto">The updated Character's data.</param>
-    /// <returns></returns>
+    /// <returns>The CharacterDtoGetDetails version of the updated Character.</returns>
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateCharacter([FromRoute] int id, [FromBody] CharacterDtoPut updateDto)
     {

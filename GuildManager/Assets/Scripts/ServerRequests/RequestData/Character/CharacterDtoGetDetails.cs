@@ -1,6 +1,9 @@
 using System;
-using UnityEngine;
 
+/// <summary>
+/// Character's DTO for GET operation.
+/// Contains all the data needed for a Character.
+/// </summary>
 [Serializable]
 public class CharacterDtoGetDetails
 {

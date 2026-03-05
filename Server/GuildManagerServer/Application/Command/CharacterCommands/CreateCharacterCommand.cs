@@ -1,5 +1,8 @@
 namespace GuildManagerServer.Application.Command;
 
+/// <summary>
+/// Command data for creating Character.
+/// </summary>
 public record class CreateCharacterCommand
 {
     public string Name { get; init; } = string.Empty;

@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// UI Menu that display buttons to select Character in order to get details or modify them.
+/// </summary>
 public class UI_CharacterSelector : UI_Menu
 {
     [SerializeField] private UI_CharacterSelectorButton buttonPrefab;
@@ -31,14 +34,17 @@ public class UI_CharacterSelector : UI_Menu
 
         List<CharacterDtoGetResume> retrivedData = await CharacterService.GetAllCharactersResumes();
 
-        foreach (CharacterDtoGetResume data in retrivedData)
+        if (retrivedData != null)
         {
-            UI_CharacterSelectorButton buttonToAdd = Instantiate(buttonPrefab, buttonHolder);
-            buttonToAdd.Set(this, data.Id, data.Name);
-            loadedButtons.Add(buttonToAdd);
-        }
+            foreach (CharacterDtoGetResume data in retrivedData)
+            {
+                UI_CharacterSelectorButton buttonToAdd = Instantiate(buttonPrefab, buttonHolder);
+                buttonToAdd.Set(this, data.Id, data.Name);
+                loadedButtons.Add(buttonToAdd);
+            }
 
-        CharacterDisplayHandler.Instance.ReloadAll(retrivedData);
+            CharacterRenderHandler.Instance.ReloadAll(retrivedData);
+        }
 
         handler.HideLoading();
     }

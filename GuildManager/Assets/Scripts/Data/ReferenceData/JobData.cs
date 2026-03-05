@@ -1,3 +1,6 @@
+/// <summary>
+/// Contains the data of a Job.
+/// </summary>
 public class JobData : ReferenceData
 {
     public string Name { get; set; } = string.Empty;

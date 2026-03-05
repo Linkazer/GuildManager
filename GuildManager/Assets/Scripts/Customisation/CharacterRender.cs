@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class CharacterDisplay : MonoBehaviour
+/// <summary>
+/// Manage the render of a Character.
+/// </summary>
+public class CharacterRender : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer bodyHolder;
     [SerializeField] private SpriteRenderer equipmentHolder;
@@ -10,6 +13,10 @@ public class CharacterDisplay : MonoBehaviour
 
     public CharacterDtoGetResume Data => data;
 
+    /// <summary>
+    /// Set the render from the corresponding data.
+    /// </summary>
+    /// <param name="nData">The data of the Character to render.</param>
     public void SetCharacter(CharacterDtoGetResume nData)
     {
         if(nData == null)

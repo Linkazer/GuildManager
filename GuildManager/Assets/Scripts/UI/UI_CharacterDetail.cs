@@ -2,6 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
+/// <summary>
+/// UI_Menu that display the data of a Character.
+/// </summary>
 public class UI_CharacterDetail : UI_Menu
 {
     [Header("Linked menus")]
@@ -26,6 +29,10 @@ public class UI_CharacterDetail : UI_Menu
     private int characterId;
     private CharacterDtoGetDetails loadedCharacter;
 
+    /// <summary>
+    /// Set the Id of the Character whose data will be displayed.
+    /// </summary>
+    /// <param name="nCharacterId"></param>
     public void SetCharacterId(int nCharacterId)
     {
         characterId = nCharacterId;
@@ -43,6 +50,9 @@ public class UI_CharacterDetail : UI_Menu
         }
     }
 
+    /// <summary>
+    /// Load the Character's data and display them.
+    /// </summary>
     private async void LoadCharacter()
     {
         handler.DisplayLoading();
@@ -67,6 +77,10 @@ public class UI_CharacterDetail : UI_Menu
         
     }
 
+    /// <summary>
+    /// Display the data of a Character.
+    /// </summary>
+    /// <param name="characterData"></param>
     private void DisplayDetails(CharacterDtoGetDetails characterData)
     {
         nameHolder.text = characterData.Name;

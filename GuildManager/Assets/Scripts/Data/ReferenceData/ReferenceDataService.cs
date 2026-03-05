@@ -1,10 +1,11 @@
 using GuildManager;
-using NUnit.Framework.Internal;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UnityEngine;
 
+/// <summary>
+/// Service that loads and provides access to all ReferenceData.
+/// </summary>
 public static class ReferenceDataService
 {
     private const string RequestRaceUrl = "Race";
@@ -19,6 +20,10 @@ public static class ReferenceDataService
     public static ReferenceDataHandler<JobData> JobData => jobs;
     public static ReferenceDataHandler<EquipmentData> EquipmentData => equipments;
 
+    /// <summary>
+    /// Load all the data.
+    /// </summary>
+    /// <returns></returns>
     public static async Task Load()
     {
         races = new ReferenceDataHandler<RaceData>();
@@ -32,22 +37,31 @@ public static class ReferenceDataService
 
     private static async Task FillRaceDataAsync()
     {
-        List<DtoGetRace> getResult = await HttpRequests.Get<List<DtoGetRace>>(RequestRaceUrl);
+        List<RaceDtoGet> getResult = await HttpRequests.Get<List<RaceDtoGet>>(RequestRaceUrl);
 
-        races.SetData(getResult.Select(r => r.ToRaceData()).ToList());
+        if (getResult != null)
+        {
+            races.AddData(getResult.Select(r => r.ToRaceData()).ToList());
+        }
     }
 
     private static async Task FillJobDataAsync()
     {
-        List<DtoGetJob> getResult = await HttpRequests.Get<List<DtoGetJob>>(RequestJobUrl);
+        List<JobDtoGet> getResult = await HttpRequests.Get<List<JobDtoGet>>(RequestJobUrl);
 
-        jobs.SetData(getResult.Select(j => j.ToJobData()).ToList());
+        if (getResult != null)
+        {
+            jobs.AddData(getResult.Select(j => j.ToJobData()).ToList());
+        }
     }
 
     private static async Task FillEquipmentDataAsync()
     {
-        List<DtoGetEquipment> getResult = await HttpRequests.Get<List<DtoGetEquipment>>(RequestEquipmentUrl);
+        List<EquipmentDtoGet> getResult = await HttpRequests.Get<List<EquipmentDtoGet>>(RequestEquipmentUrl);
 
-        equipments.SetData(getResult.Select(e => e.ToEquipmentData()).ToList());
+        if (getResult != null)
+        {
+            equipments.AddData(getResult.Select(e => e.ToEquipmentData()).ToList());
+        }
     }
 }

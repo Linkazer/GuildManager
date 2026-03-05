@@ -1,7 +1,6 @@
-using NUnit.Framework.Internal;
-
 public static class CharacterMapper
 {
+    //CharacterDtoGetDetails to CharacterData.
     public static CharacterData ToData(this CharacterDtoGetDetails getResult)
     {
         return new CharacterData
@@ -29,6 +28,7 @@ public static class CharacterMapper
         };
     }
 
+    //CharacterDtoGetBase to CharacterData.
     public static CharacterData ToData(this CharacterDtoGetBase dto)
     {
         return new CharacterData
@@ -52,6 +52,7 @@ public static class CharacterMapper
         };
     }
 
+    //CharacterData to CharacterDtoPost.
     public static CharacterDtoPost ToPost(this CharacterData character)
     {
         return new CharacterDtoPost
@@ -74,6 +75,7 @@ public static class CharacterMapper
         };
     }
 
+    //CharacterData to CharacterDtoPut.
     public static CharacterDtoPut ToPut(this CharacterData character)
     {
         return new CharacterDtoPut
@@ -96,6 +98,7 @@ public static class CharacterMapper
         };
     }
 
+    //CharacterData to CharacterDtoGetResume.
     public static CharacterDtoGetResume ToResume(this CharacterData character)
     {
         return new CharacterDtoGetResume
@@ -110,5 +113,4 @@ public static class CharacterMapper
             EquipmentId = character.EquipmentId
         };
     }
-
 }

@@ -48,7 +48,7 @@ public static class CharacterMapper
 
     #region DTO
     /// <summary>
-    /// Map a Character to its GetCharacter DTO.
+    /// Map a Character to its Get Details DTO.
     /// </summary>
     /// <param name="character">The Character to map.</param>
     /// <returns></returns>
@@ -79,6 +79,11 @@ public static class CharacterMapper
         };
     }
 
+    /// <summary>
+    /// Map a Character to its Get Resume DTO.
+    /// </summary>
+    /// <param name="character">The Character to map.</param>
+    /// <returns></returns>
     public static CharacterDtoGetResume ToDtoGetResume(this Character character)
     {
         return new CharacterDtoGetResume
@@ -95,9 +100,14 @@ public static class CharacterMapper
         };
     }
 
-    public static CharacterDtoGetBase ToDtoGetBase(this Character character)
+    /// <summary>
+    /// Map a Character to its Get Raw DTO.
+    /// </summary>
+    /// <param name="character">The Character to map.</param>
+    /// <returns></returns>
+    public static CharacterDtoGetRaw ToDtoGetRaw(this Character character)
     {
-        return new CharacterDtoGetBase
+        return new CharacterDtoGetRaw
         {
             Id = character.Id,
             Name = character.Name,
@@ -120,6 +130,11 @@ public static class CharacterMapper
     #endregion
 
     #region Command
+    /// <summary>
+    /// Map a CharacterDtoPost to its Command version.
+    /// </summary>
+    /// <param name="postCharacter">The Character to map.</param>
+    /// <returns></returns>
     public static CreateCharacterCommand ToCommand(this CharacterDtoPost postCharacter)
     {
         return new CreateCharacterCommand(
@@ -139,6 +154,11 @@ public static class CharacterMapper
         );
     }
 
+    /// <summary>
+    /// Map a CharacterDtoPut to its Command version.
+    /// </summary>
+    /// <param name="putCharacter">The Character to map.</param>
+    /// <returns></returns>
     public static UpdateCharacterCommand ToCommand(this CharacterDtoPut putCharacter)
     {
         return new UpdateCharacterCommand(

@@ -1,5 +1,8 @@
 namespace GuildManagerServer.Application.Command;
 
+/// <summary>
+/// Command data for updating Character.
+/// </summary>
 public record class UpdateCharacterCommand
 {
     public string Name { get; init; } = string.Empty;

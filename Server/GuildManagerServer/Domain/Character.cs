@@ -64,6 +64,13 @@ public class Character
         Equipment = nEquipment;
     }
 
+    /// <summary>
+    /// Try to create a new Character, checking all data before validating the Character's creation.
+    /// </summary>
+    /// <returns>
+    ///     If the Character is created, return a DataCreated result with the Character data in it.
+    ///     If one or more data aren't correct, return an error Result specific to the incorrect data.
+    /// </returns>
     public static Result<Character> TryCreate(string nName, Race nRace, Job nJob, int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct, 
         int nBodyId, int nHairId, int nHairColorId, Equipment nEquipment)
     {
@@ -100,7 +107,14 @@ public class Character
         return Result<Character>.Success(ResultCode.DataCreated, createdCharacter);
     }
 
-    public static Result<Character> TryCreate(int nId, string nName, Race nRace, Job nJob, int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct, 
+    /// <summary>
+    /// Try to create a new Character, checking all data before validating the Character's creation.
+    /// </summary>
+    /// <returns>
+    ///     If the Character is created, return a DataCreated result with the Character data in it.
+    ///     If one or more data aren't correct, return an error Result specific to the incorrect data.
+    /// </returns>
+    public static Result<Character> TryCreateWithId(int nId, string nName, Race nRace, Job nJob, int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct, 
         int nBodyId, int nHairId, int nHairColorId, Equipment nEquipment)
     {
         if(nId < 1)
@@ -118,6 +132,10 @@ public class Character
         return createdCharacterResult;
     }
 
+    /// <summary>
+    /// Set the Id of the Character if the Id is correct.
+    /// </summary>
+    /// <returns>The Result of the set. Id the Id is invalid, return an InvalidCharacterData error.</returns>
     public Result SetId(int nId)
     {
         if(nId < 1)
@@ -130,6 +148,10 @@ public class Character
         return Result.Success(ResultCode.SimpleValidate);
     }
 
+    /// <summary>
+    /// Set the Name of the Character if the Name is correct.
+    /// </summary>
+    /// <returns>The Result of the set. If the Name is invalid, return an InvalidCharacterData error.</returns>
     public Result SetName(string nName)
     {
         if(nName == string.Empty || nName.Length > MaxNameLength)
@@ -142,6 +164,10 @@ public class Character
         return Result.Success(ResultCode.SimpleValidate);
     }
 
+    /// <summary>
+    /// Set the Level of the Character if the Level is correct.
+    /// </summary>
+    /// <returns>The Result of the set. If the Level is invalid, return an InvalidCharacterData error.</returns>
     public Result SetLevel(int nLevel)
     {
         if(nLevel < 1 || nLevel > 10)
@@ -172,6 +198,10 @@ public class Character
     #endregion
 
     #region All Stats
+    /// <summary>
+    /// Set all the Character's stats if they are correct.
+    /// </summary>
+    /// <returns>The Result of the set. If the Level, stat's total, or one of the stats are invalid, return an InvalidCharacterData error.</returns>
     public Result SetStats(int nLevel, int nStrength, int nSpirit, int nPresence, int nDexterity, int nInstinct)
     {
         Result result = new Result();
@@ -226,6 +256,10 @@ public class Character
     }
 
     #region Individual Stats
+    /// <summary>
+    /// Set the Strength of the Character if the Strength is correct.
+    /// </summary>
+    /// <returns>The Result of the set. If the Strength is invalid, return an InvalidCharacterData error.</returns>
     public Result SetStrength(int nStrength)
     {
         if(nStrength > StartStats + Level / 2)
@@ -238,7 +272,10 @@ public class Character
 
         return Result.Success(ResultCode.SimpleValidate);
     }
-
+    /// <summary>
+    /// Set the Spirit of the Character if the Spirit is correct.
+    /// </summary>
+    /// <returns>The Result of the set. If the Spirit is invalid, return an InvalidCharacterData error.</returns>
     public Result SetSpirit(int nSpirit)
     {
         if(nSpirit - StartStats > Level / 2)
@@ -252,6 +289,10 @@ public class Character
         return Result.Success(ResultCode.SimpleValidate);
     }
 
+    /// <summary>
+    /// Set the Presence of the Character if the Presence is correct.
+    /// </summary>
+    /// <returns>The Result of the set. If the Presence is invalid, return an InvalidCharacterData error.</returns>
     public Result SetPresence(int nPresence)
     {
         if(nPresence - StartStats > Level / 2)
@@ -265,6 +306,10 @@ public class Character
         return Result.Success(ResultCode.SimpleValidate);
     }
 
+    /// <summary>
+    /// Set the Dexterity of the Character if the Dexterity is correct.
+    /// </summary>
+    /// <returns>The Result of the set. If the Dexterity is invalid, return an InvalidCharacterData error.</returns>
     public Result SetDexterity(int nDexterity)
     {
         if(nDexterity - StartStats > Level / 2)
@@ -278,6 +323,10 @@ public class Character
         return Result.Success(ResultCode.SimpleValidate);
     }
 
+    /// <summary>
+    /// Set the Instinct of the Character if the Instinct is correct.
+    /// </summary>
+    /// <returns>The Result of the set. If the Instinct is invalid, return an InvalidCharacterData error.</returns>
     public Result SetInstinct(int nInstinct)
     {
         if(nInstinct - StartStats > Level / 2)
@@ -294,6 +343,10 @@ public class Character
     #endregion
 
     #region  Personalisation
+    /// <summary>
+    /// Set all the Personnalisation data of the Character if the data is correct.
+    /// </summary>
+    /// <returns>The Result of the set. If the Body's Id, HairId's or Hair color's Id are invalid, return an InvalidCharacterData error.</returns>
     public Result SetPersonalisation(int nBodyId, int nHairId, int nHairColorId)
     {
         Result result = new Result();
@@ -313,6 +366,10 @@ public class Character
         return Result.Success(ResultCode.SimpleValidate);
     }
 
+    /// <summary>
+    /// Set BodyId the Character if the BodyId is correct.
+    /// </summary>
+    /// <returns>The Result of the set. If the BodyId is invalid, return an InvalidCharacterData error.</returns>
     public Result SetBody(int nBodyId)
     {
         if(nBodyId < 1)
@@ -326,6 +383,10 @@ public class Character
         return Result.Success(ResultCode.SimpleValidate);
     }
 
+    /// <summary>
+    /// Set HairId and HairColorId the Character if the HairId and HairColorId is correct.
+    /// </summary>
+    /// <returns>The Result of the set. If the HairId or HairColorId is invalid, return an InvalidCharacterData error.</returns>
     public Result SetHair(int nHairId, int nHairColorId)
     {
         if(nHairId < 1 || nHairColorId < 1)

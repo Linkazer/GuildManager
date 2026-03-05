@@ -1,6 +1,9 @@
 namespace GuildManagerServer.Api.Dto.CharacterDto;
 
-public record class CharacterDtoGetBase
+/// <summary>
+/// DTO used to get the raw data of a Character (By raw, we mean datas that are stored in the database without recalculating them).
+/// </summary>
+public record class CharacterDtoGetRaw
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;

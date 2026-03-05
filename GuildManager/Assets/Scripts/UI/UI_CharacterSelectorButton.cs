@@ -1,6 +1,9 @@
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Handle the selection of a Character in the CharacterSelector menu.
+/// </summary>
 public class UI_CharacterSelectorButton : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI buttonText;

@@ -1,5 +1,9 @@
 using System;
 
+/// <summary>
+/// Character's DTO for GET operation.
+/// Contains only the data needed to identify and display the character.
+/// </summary>
 [Serializable]
 public class CharacterDtoGetResume
 {

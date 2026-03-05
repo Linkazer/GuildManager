@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Base class for UI menu. Handle the opneing and closing of the menu.
+/// </summary>
 public abstract class UI_Menu : MonoBehaviour
 {
     [SerializeField] protected CanvasGroup menuGroup;

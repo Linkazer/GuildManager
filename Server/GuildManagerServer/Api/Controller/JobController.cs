@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GuildManagerServer.Api.Controller
 {
+    /// <summary>
+    /// Controller for Job data.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class JobController : ControllerBase

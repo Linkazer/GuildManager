@@ -3,25 +3,56 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Networking;
-using static System.Net.WebRequestMethods;
 
 namespace GuildManager
 {
+    /// <summary>
+    /// Catains all data of an API's response.
+    /// </summary>
     [Serializable]
     public class ApiErrorResponse
     {
         public Dictionary<string, List<string>> Errors { get; set; }
         public string Title { get; set; }
-        public int Status { get; set; }
+        public long Status { get; set; }
+
+        /// <summary>
+        /// Get the full error message in one string.
+        /// </summary>
+        /// <returns></returns>
+        public string GetMessage()
+        {
+            string message = $"Server Error : <b>{Title}</b> with status <b>{Status}</b>.\n";
+
+            if (Errors != null)
+            {
+                foreach (KeyValuePair<string, List<string>> err in Errors)
+                {
+                    message += $"Error at <b>{err.Key}</b> : {err.Value[0]}\n";
+                }
+            }
+
+            return message;
+        }
     }
 
+    /// <summary>
+    /// Provides method to make requests to the server's API.
+    /// </summary>
     public static class HttpRequests
     {
         private const string URI = "http://localhost:5181/api/";
 
+        public static Action<ApiErrorResponse> OnErrorTriggered;
+
+        /// <summary>
+        /// Send a GET request to the server.
+        /// </summary>
+        /// <typeparam name="Returned">The type of data the server should send us.</typeparam>
+        /// <param name="url">The URL used for the request.</param>
+        /// <returns>The corresponding data deserialized as Returned type. If none was found, return NULL.</returns>
         public static async Task<Returned> Get<Returned>(string url) where Returned : class
         {
             UnityWebRequest getRequest = CreateRequest(url, RequestType.GET);
@@ -37,6 +68,13 @@ namespace GuildManager
             }
         }
 
+        /// <summary>
+        /// Send a POST request to the server.
+        /// </summary>
+        /// <typeparam name="Returned">The type of data the server should send us.</typeparam>
+        /// <param name="url">The URL used for the request.</param>
+        /// <param name="data">The data to send to the server.</param>
+        /// <returns>The posted data deserialized as Returned type. If the data wasn't correctely created, return NULL.</returns>
         public static async Task<Returned> Post<Returned>(string url, object data) where Returned : class
         {
             UnityWebRequest postRequest = CreateRequest(url, RequestType.POST, data);
@@ -52,6 +90,13 @@ namespace GuildManager
             }
         }
 
+        /// <summary>
+        /// Send a PUT request to the server.
+        /// </summary>
+        /// <typeparam name="Returned">The type of data the server should send us.</typeparam>
+        /// <param name="url">The URL used for the request.</param>
+        /// <param name="data">The data to send to the server.</param>
+        /// <returns>The updated data deserialized as Returned type. If the data wasn't correctely updated, return NULL.</returns>
         public static async Task<Returned> Put<Returned>(string url, object data) where Returned : class
         {
             UnityWebRequest putRequest = CreateRequest(url, RequestType.PUT, data);
@@ -67,6 +112,11 @@ namespace GuildManager
             }
         }
 
+        /// <summary>
+        /// Send a DELETE request to the server.
+        /// </summary>
+        /// <param name="url">The URL used for the request.</param>
+        /// <returns>Returns TRUE if the delete was successfull. Otherwise, return FALSE.</returns>
         public static async Task<bool> Delete(string url)
         {
             UnityWebRequest deleteRequest = CreateRequest(url, RequestType.DELETE);
@@ -75,6 +125,13 @@ namespace GuildManager
             return GetRequestResult(deleteRequest);
         }
 
+        /// <summary>
+        /// Create a new request to the server.
+        /// </summary>
+        /// <param name="url">The URL used for the request.</param>
+        /// <param name="type">The type of request we want to create.</param>
+        /// <param name="data">The data to send with the request.</param>
+        /// <returns></returns>
         private static UnityWebRequest CreateRequest(string url, RequestType type, object data = null)
         {
             string method = GetRequestMethod(type);
@@ -110,26 +167,40 @@ namespace GuildManager
             return "";
         }
 
+        /// <summary>
+        /// Get the result of a request.
+        /// </summary>
+        /// <param name="request">The request to get the result from.</param>
+        /// <returns></returns>
         private static bool GetRequestResult(UnityWebRequest request)
         {
-            if(request.result != UnityWebRequest.Result.Success)
+            ApiErrorResponse error = null;
+
+            switch (request.result)
             {
-                Debug.Log(request.responseCode);
-                Debug.Log(request.error);
+                case UnityWebRequest.Result.Success:
+                    return true;
+                case UnityWebRequest.Result.ConnectionError:
+                    error = new ApiErrorResponse
+                    {
+                        Title = "Connection Error",
+                        Status = request.responseCode
+                    };
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    error = JsonConvert.DeserializeObject<ApiErrorResponse>(request.downloadHandler.text);
+                    break;
+                case UnityWebRequest.Result.DataProcessingError:
+                    error = JsonConvert.DeserializeObject<ApiErrorResponse>(request.downloadHandler.text);
+                    break;
             }
 
-            if(request.responseCode == 400)
+            if(error != null)
             {
-                ApiErrorResponse error = JsonConvert.DeserializeObject<ApiErrorResponse>(request.downloadHandler.text);
-
-                foreach(KeyValuePair<string, List<string>> err in error.Errors)
-                {
-                    Debug.Log($"Error at {err.Key} : \"{err.Value[0]}\"");
-                }
+                OnErrorTriggered?.Invoke(error);
             }
 
-            //CODE REVIEW : Switch pour renvoyer les différents types d'erreurs ?
-            return request.result == UnityWebRequest.Result.Success;
+            return false;
         }
     }
 }

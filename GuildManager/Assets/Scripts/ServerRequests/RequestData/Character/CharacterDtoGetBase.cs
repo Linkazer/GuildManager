@@ -1,5 +1,9 @@
 using System;
 
+/// <summary>
+/// Character's DTO for GET operation.
+/// Contains all the raw data of a Character (before adding race's stats, job's stat, ...).
+/// </summary>
 [Serializable]
 public class CharacterDtoGetBase
 {

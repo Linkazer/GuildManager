@@ -9,7 +9,7 @@ namespace GuildManagerServer.Api.Mapping;
 public static class ResultMapper
 {
     /// <summary>
-    /// Get a IActionResult from a Result.
+    /// Get an IActionResult from a Result.
     /// </summary>
     /// <typeparam name="T">The type of data the Result wanted.</typeparam>
     /// <param name="controller">The controller in which we want to get the Result.</param>

@@ -1,6 +1,8 @@
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Used as a parent for a group of menus. Use to transition between menus and lock inputs while loading happens.
+/// </summary>
 public class MenuHandler : MonoBehaviour
 {
     [Header("Main Menu")]

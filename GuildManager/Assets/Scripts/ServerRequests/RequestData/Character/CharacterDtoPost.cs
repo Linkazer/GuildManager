@@ -1,5 +1,8 @@
 using System;
 
+/// <summary>
+/// Character's DTO for Post operation.
+/// </summary>
 [Serializable]
 public class CharacterDtoPost
 {

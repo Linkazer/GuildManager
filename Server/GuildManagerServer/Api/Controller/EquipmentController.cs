@@ -3,11 +3,13 @@ using GuildManagerServer.Api.Mapping;
 using GuildManagerServer.Api.Results;
 using GuildManagerServer.Api.Services;
 using GuildManagerServer.Domain;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GuildManagerServer.Api.Controller
 {
+    /// <summary>
+    /// Controller for Equipment data.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class EquipmentController : ControllerBase

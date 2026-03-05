@@ -1,5 +1,8 @@
 using System;
 
+/// <summary>
+/// Character's DTO for Put operation.
+/// </summary>
 [Serializable]
 public class CharacterDtoPut
 {

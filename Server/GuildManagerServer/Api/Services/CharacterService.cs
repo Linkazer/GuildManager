@@ -104,7 +104,7 @@ public class CharacterService : ICharacterService
         {
             Character character = creationResult.Data;
 
-            //Updates Character. CODE REVIEW : Mettre les setters en private
+            //Updates Character.
             character.SetName(updatedCharacter.Name);
 
             character.SetStats(updatedCharacter.Level,
@@ -151,7 +151,7 @@ public class CharacterService : ICharacterService
                 character.SetEquipment(equipmentModel.ToEquipment());
             }
 
-            //Update Model. CODE REVIEW : Peut être mit à part (Mapper)
+            //Update Model.
             modelToUpdate.Name = character.Name;
             modelToUpdate.Level = character.Level;
             modelToUpdate.Strength = character.Strength;

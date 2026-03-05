@@ -1,5 +1,8 @@
 namespace GuildManagerServer.Api.Dto.CharacterDto;
 
+/// <summary>
+/// DTO used to get resume and render data of a Character.
+/// </summary>
 public record class CharacterDtoGetResume
 {
     public int Id { get; set; }

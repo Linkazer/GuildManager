@@ -1,6 +1,6 @@
-using System;
-
-[Serializable]
+/// <summary>
+/// Contains all the data of a Character.
+/// </summary>
 public class CharacterData
 {
     public int Id = 0;

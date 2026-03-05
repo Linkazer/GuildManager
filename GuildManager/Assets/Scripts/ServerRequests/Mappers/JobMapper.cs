@@ -1,6 +1,7 @@
 public static class JobMapper
 {
-    public static JobData ToJobData(this DtoGetJob getData)
+    //JobDtoGet to JobData.
+    public static JobData ToJobData(this JobDtoGet getData)
     {
         return new JobData(getData.Id, getData.Name);
     }

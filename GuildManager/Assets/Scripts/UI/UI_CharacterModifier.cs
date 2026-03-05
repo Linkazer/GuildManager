@@ -1,17 +1,19 @@
-using GuildManager;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
+
+/// <summary>
+/// Menu to handle the creation and modification of a Character.
+/// </summary>
 public class UI_CharacterModifier : UI_Menu
 {
     [Header("Linked menus")]
     [SerializeField] private UI_CharacterSelector characterSelector;
 
     [Header("Previsualisation")]
-    [SerializeField] private CharacterDisplay previsualiser;
+    [SerializeField] private CharacterRender previsualiser;
 
     [Header("UI Elements")]
     [SerializeField] private TMP_InputField nameField;
@@ -31,7 +33,7 @@ public class UI_CharacterModifier : UI_Menu
     [SerializeField] private UI_IntegerModifier hairColorModifier;
 
     private int existingCharacterId = -1;
-    [SerializeField] private CharacterData modifiedCharacter;
+    private CharacterData modifiedCharacter;
 
     public void SetExistingCharacterId(int nId)
     {
@@ -40,12 +42,10 @@ public class UI_CharacterModifier : UI_Menu
 
     protected override void OnOpenMenu()
     {
-        //Race dropdown
         raceDropdown.ClearOptions();
         List<RaceData> races = ReferenceDataService.RaceData.GetAll();
         raceDropdown.AddOptions(races.Select(r => r.Name).ToList());
 
-        //Job dropdown
         jobDropdown.ClearOptions();
         List<JobData> jobs = ReferenceDataService.JobData.GetAll();
         jobDropdown.AddOptions(jobs.Select(j => j.Name).ToList());
@@ -91,8 +91,8 @@ public class UI_CharacterModifier : UI_Menu
         hairstyleModifier.ResetValue();
         hairColorModifier.ResetValue();
 
-        //raceDropdown.value = 0;
-        //jobDropdown.value = 0;
+        raceDropdown.value = 0;
+        jobDropdown.value = 0;
     }
 
     private void SetValues(CharacterDtoGetBase dataToUse)

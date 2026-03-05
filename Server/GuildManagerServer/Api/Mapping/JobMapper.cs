@@ -6,11 +6,6 @@ namespace GuildManagerServer.Api.Mapping;
 
 public static class JobMapper
 {
-    /// <summary>
-    /// Map a JobModel to an Job.
-    /// </summary>
-    /// <param name="model">The Model to map.</param>
-    /// <returns></returns>
     public static Job ToJob(this JobModel model)
     {
         return new Job
