@@ -170,9 +170,13 @@ Content-Type: application/json
 ### Supprimer un Personnage
 DELETE http://localhost:5181/api/Character/1
 
+## Aperçu
+
+<img width="1282" height="752" alt="image" src="https://github.com/user-attachments/assets/0c51fa95-3eda-44c4-be5b-50f7406dc861" />
+
 ## Auteur
 
-Nom Prénom  
+Lafranche Timothé  
 Développeur C# d'applications interactives en transition vers .NET
 
 Portfolio : https://timothelafranche.wixsite.com/portfolio
