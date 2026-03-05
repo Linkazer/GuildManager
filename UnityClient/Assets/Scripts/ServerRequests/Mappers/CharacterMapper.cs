@@ -29,7 +29,7 @@ public static class CharacterMapper
     }
 
     //CharacterDtoGetBase to CharacterData.
-    public static CharacterData ToData(this CharacterDtoGetBase dto)
+    public static CharacterData ToData(this CharacterDtoGetRaw dto)
     {
         return new CharacterData
         {

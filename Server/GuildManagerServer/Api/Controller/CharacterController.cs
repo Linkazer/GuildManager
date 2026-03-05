@@ -71,7 +71,7 @@ public class CharacterController : ControllerBase
     /// <param name="id">The id of the Character wanted.</param>
     /// <returns></returns>
     [HttpGet("Raw/{id:int}")]
-    public async Task<IActionResult> GetBaseById([FromRoute] int id)
+    public async Task<IActionResult> GetRawById([FromRoute] int id)
     {
         Result<Character> result = await service.GetByIdAsync(id);
 

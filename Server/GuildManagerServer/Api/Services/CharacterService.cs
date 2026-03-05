@@ -102,22 +102,39 @@ public class CharacterService : ICharacterService
 
         if(creationResult.Succeed && creationResult.Data != null)
         {
+            Result result = new Result();
+
             Character character = creationResult.Data;
 
             //Updates Character.
-            character.SetName(updatedCharacter.Name);
+            result = character.SetName(updatedCharacter.Name);
 
-            character.SetStats(updatedCharacter.Level,
+            if(!result.Succeed)
+            {
+                return Result<Character>.Failure(result.ResultCode.Value, result.ErrorMessage);
+            }
+
+            result = character.SetStats(updatedCharacter.Level,
                 updatedCharacter.Strength,
                 updatedCharacter.Spirit,
                 updatedCharacter.Presence,
                 updatedCharacter.Dexterity,
                 updatedCharacter.Instinct);
 
-            character.SetPersonalisation(updatedCharacter.BodyId,
+            if(!result.Succeed)
+            {
+                return Result<Character>.Failure(result.ResultCode.Value, result.ErrorMessage);
+            }
+
+            result = character.SetPersonalisation(updatedCharacter.BodyId,
                 updatedCharacter.HairId,
                 updatedCharacter.HairColorId);
 
+            if(!result.Succeed)
+            {
+                return Result<Character>.Failure(result.ResultCode.Value, result.ErrorMessage);
+            }
+            
             if(character.Race.Id != updatedCharacter.RaceId)
             {
                 RaceModel? raceModel = await raceRepository.GetByIdAsync(updatedCharacter.RaceId);

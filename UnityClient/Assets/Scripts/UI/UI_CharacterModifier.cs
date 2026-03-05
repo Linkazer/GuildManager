@@ -57,11 +57,11 @@ public class UI_CharacterModifier : UI_Menu
     {
         modifiedCharacter = new CharacterData();
 
-        CharacterDtoGetBase existingCharacter = null;
+        CharacterDtoGetRaw existingCharacter = null;
 
         if (existingCharacterId > 0)
         {
-            existingCharacter = await CharacterService.GetCharacterBaseById(existingCharacterId);
+            existingCharacter = await CharacterService.GetCharacterRawById(existingCharacterId);
         }
 
         if (existingCharacter != null)
@@ -79,6 +79,8 @@ public class UI_CharacterModifier : UI_Menu
 
     private void ResetValues()
     {
+        nameField.text = "";
+
         levelModifier.ResetValue();
         strengthModifier.ResetValue();
         spiritModifier.ResetValue();
@@ -95,7 +97,7 @@ public class UI_CharacterModifier : UI_Menu
         jobDropdown.value = 0;
     }
 
-    private void SetValues(CharacterDtoGetBase dataToUse)
+    private void SetValues(CharacterDtoGetRaw dataToUse)
     {
         nameField.text = dataToUse.Name;
 
