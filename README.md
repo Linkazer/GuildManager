@@ -1,4 +1,4 @@
-# Project Title
+# Guild Manager
 
 Choose language / Choisir la langue:
 
