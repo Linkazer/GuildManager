@@ -117,11 +117,12 @@ GET http://localhost:5181/api/Job
 GET http://localhost:5181/api/Equipment
 
 ### Récupérer un Personnage
-GET http://localhost:5181/api/Character/Details/1 (Récupère les données calculées d'un Personnage)
 
-GET http://localhost:5181/api/Character/Raw/1 (Récupère les données non calculées d'un Personnage)
+- GET http://localhost:5181/api/Character/Details/1 (Récupère les données calculées d'un Personnage)
 
-GET http://localhost:5181/api/Character/Resume/1 (Récupère un résumé des données d'un Personnage)
+- GET http://localhost:5181/api/Character/Raw/1 (Récupère les données non calculées d'un Personnage)
+
+- GET http://localhost:5181/api/Character/Resume/1 (Récupère un résumé des données d'un Personnage)
 
 ### Créer un Personnage
 POST http://localhost:5181/api/Character

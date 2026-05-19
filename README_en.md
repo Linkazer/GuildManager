@@ -121,13 +121,15 @@ GET http://localhost:5181/api/Job
 GET http://localhost:5181/api/Equipment
 
 ### Retrieve a Character
-GET http://localhost:5181/api/Character/Details/1 (Retrieves the calculated data for a character)
 
-GET http://localhost:5181/api/Character/Raw/1 (Retrieves the uncalculated data for a Character)
+- GET http://localhost:5181/api/Character/Details/1 (Retrieves the calculated data for a character)
 
-GET http://localhost:5181/api/Character/Resume/1 (Retrieves a summary of a Character's data)
+- GET http://localhost:5181/api/Character/Raw/1 (Retrieves the uncalculated data for a Character)
+
+- GET http://localhost:5181/api/Character/Resume/1 (Retrieves a summary of a Character's data)
 
 ### Create a Character
+
 POST http://localhost:5181/api/Character
 Content-Type: application/json
 
